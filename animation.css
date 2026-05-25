@@ -1,0 +1,286 @@
+/* =========================================================
+   ULTRA PREMIUM GLOBAL REVEAL
+========================================================= */
+
+.reveal,
+.hero-title,
+.hero-desc,
+.hero-btn,
+.stat,
+.top-image,
+.bottom-image,
+.about-text,
+.about-images,
+.img-wrap,
+.feature,
+.feature__img-wrap,
+.feature__text,
+.newsletter-content,
+.subscribe-wrapper,
+.footer-column,
+.nav-links li,
+.logo{
+
+    opacity:0;
+
+    transform:
+    translateY(45px)
+    scale(.98);
+
+    filter:blur(6px);
+
+    transition:
+    opacity .65s cubic-bezier(.22,1,.36,1),
+    transform .65s cubic-bezier(.22,1,.36,1),
+    filter .65s cubic-bezier(.22,1,.36,1);
+
+    will-change:
+    transform,
+    opacity;
+
+}
+
+/* =========================================================
+   ACTIVE STATE
+========================================================= */
+
+.reveal.active,
+.hero-title.active,
+.hero-desc.active,
+.hero-btn.active,
+.stat.active,
+.top-image.active,
+.bottom-image.active,
+.about-text.active,
+.about-images.active,
+.img-wrap.active,
+.feature.active,
+.feature__img-wrap.active,
+.feature__text.active,
+.newsletter-content.active,
+.subscribe-wrapper.active,
+.footer-column.active,
+.nav-links li.active,
+.logo.active{
+
+    opacity:1;
+
+    transform:
+    translateY(0)
+    scale(1);
+
+    filter:blur(0);
+
+}
+
+/* =========================================================
+   LEFT ANIMATION
+========================================================= */
+
+.feature--left .feature__img-wrap,
+.feature--left .feature__text{
+
+    transform:
+    translateX(-45px)
+    scale(.98);
+
+}
+
+.feature--left .feature__img-wrap.active,
+.feature--left .feature__text.active{
+
+    transform:
+    translateX(0)
+    scale(1);
+
+}
+
+/* =========================================================
+   RIGHT ANIMATION
+========================================================= */
+
+.feature--right .feature__img-wrap,
+.feature--right .feature__text{
+
+    transform:
+    translateX(45px)
+    scale(.98);
+
+}
+
+.feature--right .feature__img-wrap.active,
+.feature--right .feature__text.active{
+
+    transform:
+    translateX(0)
+    scale(1);
+
+}
+
+/* =========================================================
+   HERO TITLE PREMIUM ENTRANCE
+========================================================= */
+
+.hero-title{
+
+    transform:
+    translateY(60px)
+    scale(.94);
+
+}
+
+.hero-title.active{
+
+    transform:
+    translateY(0)
+    scale(1);
+
+}
+
+/* =========================================================
+   STAGGER DELAYS
+========================================================= */
+
+.hero-desc{
+    transition-delay:.05s;
+}
+
+.hero-btn{
+    transition-delay:.1s;
+}
+
+.stat:nth-child(1){
+    transition-delay:.05s;
+}
+
+.stat:nth-child(2){
+    transition-delay:.1s;
+}
+
+.stat:nth-child(3){
+    transition-delay:.15s;
+}
+
+.footer-column:nth-child(1){
+    transition-delay:.05s;
+}
+
+.footer-column:nth-child(2){
+    transition-delay:.1s;
+}
+
+.footer-column:nth-child(3){
+    transition-delay:.15s;
+}
+
+.footer-column:nth-child(4){
+    transition-delay:.2s;
+}
+
+/* =========================================================
+   PREMIUM BUTTON EFFECT
+========================================================= */
+
+.hero-btn,
+.signup-btn,
+.subscribe-btn{
+
+    transition:
+    transform .35s ease,
+    box-shadow .35s ease,
+    background .35s ease;
+
+}
+
+.hero-btn:hover,
+.signup-btn:hover,
+.subscribe-btn:hover{
+
+    transform:
+    translateY(-6px);
+
+    box-shadow:
+    0 20px 40px rgba(0,0,0,.12);
+
+}
+
+/* =========================================================
+   IMAGE HOVER EFFECT
+========================================================= */
+
+.top-image,
+.bottom-image,
+.feature__img-wrap,
+.img-wrap{
+
+    transition:
+    transform .5s ease,
+    box-shadow .5s ease;
+
+}
+
+.top-image:hover,
+.bottom-image:hover,
+.feature__img-wrap:hover,
+.img-wrap:hover{
+
+    transform:
+    translateY(-8px);
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.14);
+
+}
+
+/* =========================================================
+   MOBILE OPTIMIZATION
+========================================================= */
+
+@media(max-width:768px){
+
+    .reveal,
+    .hero-title,
+    .hero-desc,
+    .hero-btn,
+    .stat,
+    .top-image,
+    .bottom-image,
+    .about-text,
+    .about-images,
+    .img-wrap,
+    .feature,
+    .feature__img-wrap,
+    .feature__text,
+    .newsletter-content,
+    .subscribe-wrapper,
+    .footer-column,
+    .nav-links li,
+    .logo{
+
+        transform:
+        translateY(30px)
+        scale(.99);
+
+        transition:
+        opacity .5s ease,
+        transform .5s ease,
+        filter .5s ease;
+
+    }
+
+}
+
+/* =========================================================
+   PERFORMANCE
+========================================================= */
+
+.feature__img-wrap img,
+.top-image img,
+.bottom-image img,
+.img-wrap img{
+
+    backface-visibility:hidden;
+
+    transform:translateZ(0);
+
+}
