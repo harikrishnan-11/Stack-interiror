@@ -21,7 +21,6 @@ const revealElements = document.querySelectorAll(`
 .footer-column,
 .nav-links li,
 .logo,
-
 .categories-section,
 .section-header,
 .carousel-container,
