@@ -13,7 +13,7 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="./admin.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -42,56 +42,55 @@
    ADD THIS INSIDE .sidebar-nav
    REPLACE YOUR CURRENT NAVIGATION
 ========================================= -->
-
 <nav class="sidebar-nav">
 
     <a href="#dashboard" class="nav-link active">
-        <span>🏠</span>
+        <i class="fa-solid fa-house"></i>
         Dashboard
     </a>
 
     <a href="#projects" class="nav-link">
-        <span>📐</span>
+        <i class="fa-solid fa-ruler-combined"></i>
         Projects
     </a>
 
     <a href="#clients" class="nav-link">
-        <span>👥</span>
+        <i class="fa-solid fa-users"></i>
         Clients
     </a>
 
     <a href="#team" class="nav-link">
-        <span>🧑‍💼</span>
+        <i class="fa-solid fa-user-tie"></i>
         Team
     </a>
 
     <a href="#payments" class="nav-link">
-        <span>💳</span>
+        <i class="fa-solid fa-credit-card"></i>
         Payments
     </a>
 
     <a href="#analytics" class="nav-link">
-        <span>📊</span>
+        <i class="fa-solid fa-chart-line"></i>
         Analytics
     </a>
 
     <a href="#messages" class="nav-link">
-        <span>💬</span>
+        <i class="fa-solid fa-message"></i>
         Messages
     </a>
 
     <a href="#calendar" class="nav-link">
-        <span>📅</span>
+        <i class="fa-solid fa-calendar-days"></i>
         Calendar
     </a>
 
     <a href="#inventory" class="nav-link">
-        <span>🪵</span>
+        <i class="fa-solid fa-boxes-stacked"></i>
         Inventory
     </a>
 
     <a href="#settings" class="nav-link">
-        <span>⚙️</span>
+        <i class="fa-solid fa-gear"></i>
         Settings
     </a>
 
@@ -226,7 +225,124 @@
             </div>
 
         </section>
+       <section class="quick-actions glass">
 
+    <div class="section-title">
+        <h2>Quick Actions</h2>
+    </div>
+
+    <div class="actions-grid">
+
+        <button class="action-btn">
+            <i class="fa-solid fa-plus"></i> Add New Project
+        </button>
+
+        <button class="action-btn">
+            <i class="fa-solid fa-user-plus"></i> Add Client
+        </button>
+
+        <button class="action-btn">
+            <i class="fa-solid fa-calendar-check"></i> Schedule Meeting
+        </button>
+
+        <button class="action-btn">
+            <i class="fa-solid fa-file-invoice"></i> Generate Invoice
+        </button>
+
+    </div>
+</section>
+<section class="pipeline-section">
+
+    <div class="section-title">
+        <h2>Project Pipeline</h2>
+    </div>
+
+    <div class="pipeline-grid">
+
+        <div class="pipeline-column glass">
+            <h3><i class="fa-solid fa-list-check"></i> Planning</h3>
+            <div class="pipeline-card">Office Interior - 30%</div>
+            <div class="pipeline-card">Villa Concept - 20%</div>
+        </div>
+
+        <div class="pipeline-column glass">
+            <h3><i class="fa-solid fa-spinner"></i> In Progress</h3>
+            <div class="pipeline-card">Luxury Villa - 70%</div>
+        </div>
+
+        <div class="pipeline-column glass">
+            <h3><i class="fa-solid fa-circle-check"></i> Completed</h3>
+            <div class="pipeline-card">Penthouse - 100%</div>
+        </div>
+
+    </div>
+</section>
+
+<section class="reviews-section glass">
+
+    <div class="section-title">
+        <h2>Client Reviews</h2>
+    </div>
+
+    <div class="reviews-grid">
+
+        <div class="review-card">
+            <p>"Amazing design quality and professional team."</p>
+            <h4>- Daniel Parker</h4>
+        </div>
+
+        <div class="review-card">
+            <p>"Luxury interiors exceeded expectations!"</p>
+            <h4>- Sophia Carter</h4>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="trends-section">
+
+    <div class="section-title">
+        <h2>Trending Interior Styles</h2>
+    </div>
+
+    <div class="trends-grid">
+
+        <div class="trend-card glass">
+            <h3>Minimal Luxury</h3>
+            <p>Clean, modern high-end interiors</p>
+        </div>
+
+        <div class="trend-card glass">
+            <h3>Neo Classical</h3>
+            <p>Royal texture + modern elegance</p>
+        </div>
+
+        <div class="trend-card glass">
+            <h3>Smart Homes</h3>
+            <p>AI-powered interior automation</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="notifications-section glass">
+
+    <div class="section-title">
+        <h2>Notifications</h2>
+    </div>
+
+    <ul class="notification-list">
+
+        <li><i class="fa-solid fa-bell"></i> New client request from Mumbai</li>
+        <li><i class="fa-solid fa-wallet"></i> Payment received for Villa Project</li>
+        <li><i class="fa-solid fa-pen-ruler"></i> Design approval pending</li>
+        <li><i class="fa-solid fa-calendar"></i> Meeting scheduled with client</li>
+
+    </ul>
+
+</section>
         <!-- =========================================
            CHARTS
         ========================================== -->
@@ -635,182 +751,7 @@
 
     </main>
 
- <script>
-/* =========================================
-   MOBILE SIDEBAR
-========================================= */
-
-const mobileToggle = document.getElementById("mobileToggle");
-const sidebar      = document.getElementById("sidebar");
-
-if (mobileToggle && sidebar) {
-    mobileToggle.addEventListener("click", () => {
-        sidebar.classList.toggle("active");
-    });
-}
-
-/* =========================================
-   ACTIVE SIDEBAR LINKS
-========================================= */
-
-const navLinks = document.querySelectorAll(".nav-link");
-
-navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-
-        navLinks.forEach(item => item.classList.remove("active"));
-        link.classList.add("active");
-
-        if (window.innerWidth < 900 && sidebar) {
-            sidebar.classList.remove("active");
-        }
-    });
-});
-
-/* =========================================
-   COUNTER ANIMATION
-========================================= */
-
-function animateCounter(counter) {
-    if (counter.dataset.animated) return;
-    counter.dataset.animated = "true";
-
-    const target    = +counter.getAttribute("data-target");
-    let   current   = 0;
-    const increment = target / 80;
-
-    const updateCounter = () => {
-        current += increment;
-        if (current < target) {
-            counter.innerText = Math.ceil(current);
-            requestAnimationFrame(updateCounter);
-        } else {
-            counter.innerText = target;
-        }
-    };
-
-    updateCounter();
-}
-
-/* =========================================
-   CHART INITIALISATION (lazy)
-   FIX: charts are created only AFTER their
-   section is revealed, so the canvas always
-   has real dimensions when Chart.js measures it.
-========================================= */
-
-let revenueChartCreated = false;
-let projectChartCreated = false;
-
-function initRevenueChart() {
-    if (revenueChartCreated) return;
-    revenueChartCreated = true;
-
-    const canvas = document.getElementById("revenueChart");
-    if (!canvas) return;
-
-    new Chart(canvas, {
-        type: "line",
-        data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-            datasets: [{
-                label: "Revenue",
-                data: [12000, 19000, 30000, 42000, 50000, 62000],
-                borderColor: "#d6b98c",
-                backgroundColor: "rgba(214,185,140,.12)",
-                fill: true,
-                tension: .4,
-                borderWidth: 3,
-                pointRadius: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { labels: { color: "#ffffff" } } },
-            scales: {
-                y: { ticks: { color: "#ffffff" }, grid: { color: "rgba(255,255,255,.08)" } },
-                x: { ticks: { color: "#ffffff" }, grid: { color: "rgba(255,255,255,.08)" } }
-            }
-        }
-    });
-}
-
-function initProjectChart() {
-    if (projectChartCreated) return;
-    projectChartCreated = true;
-
-    const canvas = document.getElementById("projectChart");
-    if (!canvas) return;
-
-    new Chart(canvas, {
-        type: "doughnut",
-        data: {
-            labels: ["Completed", "Ongoing", "Planning"],
-            datasets: [{
-                data: [58, 28, 14],
-                backgroundColor: ["#d6b98c", "#395246", "#ffffff"],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { labels: { color: "#ffffff" } } }
-        }
-    });
-}
-
-/* =========================================
-   SMOOTH SCROLL
-========================================= */
-
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-});
-
-/* =========================================
-   SCROLL REVEAL + COUNTER + CHART TRIGGER
-========================================= */
-
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-
-        entry.target.classList.add("show");
-
-        // Counters
-        entry.target.querySelectorAll(".counter").forEach(animateCounter);
-
-        // Charts — only init once the section is actually visible
-        if (entry.target.querySelector("#revenueChart")) initRevenueChart();
-        if (entry.target.querySelector("#projectChart")) initProjectChart();
-
-        // Stop watching — reveal + init happen only once
-        observer.unobserve(entry.target);
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll("section").forEach(section => {
-    section.classList.add("hidden");
-    observer.observe(section);
-});
-
-/* =========================================
-   LOGOUT BUTTON
-========================================= */
-
-const logoutBtn = document.querySelector(".logout-btn");
-
-if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-        alert("Logged out successfully!");
-    });
-}
+ <script src="./admin.js">
 </script>
 
 </body>
