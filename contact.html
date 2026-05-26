@@ -226,42 +226,63 @@
         <!-- RIGHT FORM -->
         <div class="contact-form-wrapper reveal">
 
-            <form class="contact-form">
+           <form class="contact-form">
 
-                <div class="form-group">
-                    <input type="text" placeholder="Your Name" required>
-                </div>
+    <!-- NAME -->
+    <div class="form-group">
+        <input type="text" id="name" placeholder="Your Name">
 
-                <div class="form-group">
-                    <input type="email" placeholder="Email Address" required>
-                </div>
+        <small class="error-message"></small>
+    </div>
 
-                <div class="form-group">
-                    <input type="text" placeholder="Phone Number">
-                </div>
+    <!-- EMAIL -->
+    <div class="form-group">
+        <input type="email" id="email" placeholder="Email Address">
 
-                <div class="form-group">
-                    <select>
-                        <option>Select Service</option>
-                        <option>Living Room Interior</option>
-                        <option>Bedroom Design</option>
-                        <option>Office Space</option>
-                        <option>Kitchen Interior</option>
-                    </select>
-                </div>
+        <small class="error-message"></small>
+    </div>
 
-                <div class="form-group">
-                    <textarea rows="5"
-                        placeholder="Tell us about your project..."></textarea>
-                </div>
+    <!-- PHONE -->
+    <div class="form-group">
+        <input type="text" id="phone" placeholder="Phone Number">
 
-                <button type="submit" class="contact-btn">
-                    Send Message
-                    <i class="fa-solid fa-paper-plane"></i>
-                </button>
+        <small class="error-message"></small>
+    </div>
 
-            </form>
+    <!-- SERVICE -->
+    <div class="form-group">
+        <select id="service">
 
+            <option value="">Select Service</option>
+
+            <option>Living Room Interior</option>
+
+            <option>Bedroom Design</option>
+
+            <option>Office Space</option>
+
+            <option>Kitchen Interior</option>
+
+        </select>
+
+        <small class="error-message"></small>
+    </div>
+
+    <!-- MESSAGE -->
+    <div class="form-group">
+        <textarea id="message" rows="5"
+            placeholder="Tell us about your project..."></textarea>
+
+        <small class="error-message"></small>
+    </div>
+
+    <!-- BUTTON -->
+    <button type="submit" class="contact-btn">
+        Send Message
+        <i class="fa-solid fa-paper-plane"></i>
+    </button>
+
+</form>
         </div>
 
     </div>
@@ -486,7 +507,7 @@
     <!-- =========================================================
        JAVASCRIPT
   ========================================================== -->
-
+        <script src="./contact.js"></script>
     <script src="./mobileMenu.js"></script>
     <script src="./animation.js"></script>
     <script src="./newsletterEmail.js"></script>
