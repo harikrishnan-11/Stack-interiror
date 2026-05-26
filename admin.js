@@ -1,183 +1,260 @@
+// ── NAVIGATION ENGINE ──
+const pages     = document.querySelectorAll('.page');
+const navLinks  = document.querySelectorAll('.nav-link');
+const pageTitle = document.getElementById('pageTitle');
 
-/* =========================================
-   MOBILE SIDEBAR
-========================================= */
+const titles = {
+    dashboard: 'Admin Dashboard',
+    projects:  'Projects',
+    clients:   'Clients',
+    team:      'Team',
+    payments:  'Payments',
+    analytics: 'Analytics',
+    messages:  'Messages',
+    calendar:  'Calendar',
+    inventory: 'Inventory',
+    settings:  'Settings',
+};
 
-const mobileToggle = document.getElementById("mobileToggle");
-const sidebar      = document.getElementById("sidebar");
+function navigate(pageName) {
+    pages.forEach(p => p.classList.remove('active'));
+    navLinks.forEach(l => l.classList.remove('active'));
 
-if (mobileToggle && sidebar) {
-    mobileToggle.addEventListener("click", () => {
-        sidebar.classList.toggle("active");
-    });
+    const target = document.getElementById('page-' + pageName);
+    if (target) {
+        target.classList.add('active');
+    }
+
+    const activeLink = document.querySelector(`[data-page="${pageName}"]`);
+    if (activeLink) {
+        activeLink.classList.add('active');
+    }
+
+    pageTitle.textContent = titles[pageName] || pageName;
+
+    if (window.innerWidth <= 900) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('active');
+    }
+
+    if (pageName === 'analytics') initAnalyticsCharts();
+    if (pageName === 'calendar') buildCalendar();
 }
-
-/* =========================================
-   ACTIVE SIDEBAR LINKS
-========================================= */
-
-const navLinks = document.querySelectorAll(".nav-link");
 
 navLinks.forEach(link => {
-    link.addEventListener("click", () => {
-
-        navLinks.forEach(item => item.classList.remove("active"));
-        link.classList.add("active");
-
-        if (window.innerWidth < 900 && sidebar) {
-            sidebar.classList.remove("active");
-        }
-    });
+    link.addEventListener('click', () => navigate(link.dataset.page));
 });
 
-/* =========================================
-   COUNTER ANIMATION
-========================================= */
+// ── RESPONSIVE MOBILE NAVIGATION TOGGLE ──
+const sidebar = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const mobileToggle = document.getElementById('mobileToggle');
 
-function animateCounter(counter) {
-    if (counter.dataset.animated) return;
-    counter.dataset.animated = "true";
+mobileToggle.addEventListener('click', () => {
+    const isOpen = sidebar.classList.toggle('open');
+    if (isOpen) {
+        sidebarOverlay.classList.add('active');
+    } else {
+        sidebarOverlay.classList.remove('active');
+    }
+});
 
-    const target    = +counter.getAttribute("data-target");
-    let   current   = 0;
-    const increment = target / 80;
+sidebarOverlay.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('active');
+});
 
-    const updateCounter = () => {
-        current += increment;
-        if (current < target) {
-            counter.innerText = Math.ceil(current);
-            requestAnimationFrame(updateCounter);
-        } else {
-            counter.innerText = target;
-        }
+// ── METRIC ANIMATED COUNTERS ──
+function runCounters() {
+    document.querySelectorAll('.counter').forEach(el => {
+        const target = +el.dataset.target;
+        let count = 0;
+        const step = Math.ceil(target / 60);
+        const t = setInterval(() => {
+            count = Math.min(count + step, target);
+            el.textContent = count;
+            if (count >= target) clearInterval(t);
+        }, 20);
+    });
+}
+document.addEventListener('DOMContentLoaded', runCounters);
+
+// ── GLOBAL CHART MANAGEMENT ──
+let activeCharts = {};
+
+function getChartColors() {
+    const isLight = document.body.classList.contains('light-theme');
+    return {
+        text: isLight ? 'rgba(26,21,8,0.7)' : 'rgba(240,236,228,0.7)',
+        grid: isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)',
+        accent: isLight ? 'rgba(163,132,70,0.7)' : 'rgba(200,169,110,0.7)',
+        accentLine: isLight ? 'rgba(163,132,70,1)' : 'rgba(200,169,110,1)',
+        accentFill: isLight ? 'rgba(163,132,70,0.1)' : 'rgba(200,169,110,0.1)'
     };
-
-    updateCounter();
 }
 
-/* =========================================
-   CHART INITIALISATION (lazy)
-   FIX: charts are created only AFTER their
-   section is revealed, so the canvas always
-   has real dimensions when Chart.js measures it.
-========================================= */
+function buildGlobalOptions() {
+    const colors = getChartColors();
+    return {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { 
+            legend: { labels: { color: colors.text, font: { family: 'Outfit', size: 12 } } } 
+        },
+        scales: {
+            x: { ticks: { color: colors.text, font: { family: 'Outfit' } }, grid: { color: colors.grid } },
+            y: { ticks: { color: colors.text, font: { family: 'Outfit' } }, grid: { color: colors.grid } }
+        }
+    };
+}
 
-let revenueChartCreated = false;
-let projectChartCreated = false;
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-function initRevenueChart() {
-    if (revenueChartCreated) return;
-    revenueChartCreated = true;
+function initDashboardCharts() {
+    if (activeCharts.revenue) activeCharts.revenue.destroy();
+    if (activeCharts.project) activeCharts.project.destroy();
 
-    const canvas = document.getElementById("revenueChart");
-    if (!canvas) return;
+    const colors = getChartColors();
 
-    new Chart(canvas, {
-        type: "line",
+    activeCharts.revenue = new Chart(document.getElementById('revenueChart'), {
+        type: 'bar',
         data: {
-            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            labels: months,
             datasets: [{
-                label: "Revenue",
-                data: [12000, 19000, 30000, 42000, 50000, 62000],
-                borderColor: "#d6b98c",
-                backgroundColor: "rgba(214,185,140,.12)",
-                fill: true,
-                tension: .4,
-                borderWidth: 3,
-                pointRadius: 4
+                label: 'Revenue ($K)',
+                data: [120,190,150,210,180,240,200,310,280,350,290,410],
+                backgroundColor: colors.accent,
+                borderRadius: 6,
+            }]
+        },
+        options: buildGlobalOptions()
+    });
+
+    activeCharts.project = new Chart(document.getElementById('projectChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Completed','In Progress','Planning'],
+            datasets: [{
+                data: [45, 35, 20],
+                backgroundColor: ['rgba(76,175,130,0.8)','rgba(200,169,110,0.8)','rgba(240,165,0,0.7)'],
+                borderWidth: 0,
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { labels: { color: "#ffffff" } } },
+            plugins: { legend: { labels: { color: colors.text, font: { family: 'Outfit' } } } }
+        }
+    });
+}
+
+function initAnalyticsCharts(forceRebuild = false) {
+    const chartEl1 = document.getElementById('revenueChart2');
+    if (!chartEl1) return;
+
+    if (activeCharts.revenue2) {
+        if (!forceRebuild) return;
+        activeCharts.revenue2.destroy();
+    }
+    if (activeCharts.resource) activeCharts.resource.destroy();
+
+    const colors = getChartColors();
+
+    activeCharts.revenue2 = new Chart(chartEl1, {
+        type: 'line',
+        data: {
+            labels: months,
+            datasets: [{
+                label: 'Revenue ($K)',
+                data: [120,190,150,210,180,240,200,310,280,350,290,410],
+                borderColor: colors.accentLine,
+                backgroundColor: colors.accentFill,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: colors.accentLine,
+            }]
+        },
+        options: buildGlobalOptions()
+    });
+
+    activeCharts.resource = new Chart(document.getElementById('resourceChart'), {
+        type: 'radar',
+        data: {
+            labels: ['Design', 'Sourcing', 'Architecture', 'Management', '3D Modeling'],
+            datasets: [{
+                label: 'Allocated Hours',
+                data: [85, 65, 90, 70, 95],
+                borderColor: colors.accentLine,
+                backgroundColor: colors.accentFill,
+                pointBackgroundColor: colors.accentLine
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: colors.text, font: { family: 'Outfit' } } } },
             scales: {
-                y: { ticks: { color: "#ffffff" }, grid: { color: "rgba(255,255,255,.08)" } },
-                x: { ticks: { color: "#ffffff" }, grid: { color: "rgba(255,255,255,.08)" } }
+                r: {
+                    angleLines: { color: colors.grid },
+                    grid: { color: colors.grid },
+                    pointLabels: { color: colors.text, font: { family: 'Outfit' } },
+                    ticks: { display: false }
+                }
             }
         }
     });
 }
 
-function initProjectChart() {
-    if (projectChartCreated) return;
-    projectChartCreated = true;
+// Initial dashboard layout load
+document.addEventListener('DOMContentLoaded', initDashboardCharts);
 
-    const canvas = document.getElementById("projectChart");
-    if (!canvas) return;
+// ── CALENDAR GENERATOR ENGINE ──
+function buildCalendar() {
+    const grid = document.getElementById('calendarGrid');
+    if (!grid || grid.children.length > 0) return;
 
-    new Chart(canvas, {
-        type: "doughnut",
-        data: {
-            labels: ["Completed", "Ongoing", "Planning"],
-            datasets: [{
-                data: [58, 28, 14],
-                backgroundColor: ["#d6b98c", "#395246", "#ffffff"],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: { legend: { labels: { color: "#ffffff" } } }
-        }
+    const today = 26;
+    const eventDays = [5, 12, 19, 26];
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+    days.forEach(d => {
+        const el = document.createElement('div');
+        el.className = 'cal-day-name';
+        el.textContent = d;
+        grid.appendChild(el);
     });
+
+    for (let i = 0; i < 5; i++) {
+        const blank = document.createElement('div');
+        grid.appendChild(blank);
+    }
+    
+    for (let d = 1; d <= 31; d++) {
+        const el = document.createElement('div');
+        el.className = 'cal-day' + (d === today ? ' today' : '') + (eventDays.includes(d) && d !== today ? ' has-event' : '');
+        el.textContent = d;
+        grid.appendChild(el);
+    }
 }
 
-/* =========================================
-   SMOOTH SCROLL
-========================================= */
+// ── FIXED THEME TOGGLE ENGINE ──
+document.getElementById('themeToggleBtn').addEventListener('click', () => {
+    const body = document.body;
+    const icon = document.querySelector('#themeToggleBtn i');
+    
+    // Toggle class on body directly
+    body.classList.toggle('light-theme');
+    
+    // Update icon style cleanly
+    if (body.classList.contains('light-theme')) {
+        icon.className = 'fa-solid fa-sun';
+    } else {
+        icon.className = 'fa-solid fa-moon';
+    }
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute("href"));
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-});
-
-/* =========================================
-   SCROLL REVEAL + COUNTER + CHART TRIGGER
-========================================= */
-
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-
-        entry.target.classList.add("show");
-
-        // Counters
-        entry.target.querySelectorAll(".counter").forEach(animateCounter);
-
-        // Charts — only init once the section is actually visible
-        if (entry.target.querySelector("#revenueChart")) initRevenueChart();
-        if (entry.target.querySelector("#projectChart")) initProjectChart();
-
-        // Stop watching — reveal + init happen only once
-        observer.unobserve(entry.target);
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll("section").forEach(section => {
-    section.classList.add("hidden");
-    observer.observe(section);
-});
-
-/* =========================================
-   LOGOUT BUTTON
-========================================= */
-
-const logoutBtn = document.querySelector(".logout-btn");
-
-if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-        window.location.href = "./login.html";
-    });
-}
-const links = document.querySelectorAll(".nav-link");
-
-links.forEach(link => {
-    if (link.href === window.location.href) {
-        link.classList.add("active");
+    // Force refresh charts to recalibrate current color palettes
+    initDashboardCharts();
+    if (document.getElementById('page-analytics').classList.contains('active')) {
+        initAnalyticsCharts(true);
     }
 });
