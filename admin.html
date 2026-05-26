@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stackly Interior Design</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="./admin.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <!-- =========================================
+       MOBILE MENU BUTTON
+    ========================================== -->
+
+    <button class="mobile-toggle" id="mobileToggle">
+        ☰
+    </button>
+
+    <!-- =========================================
+       SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            <h2>STACKLY</h2>
+            <p>Interior Design</p>
+        </div>
+
+        <!-- =========================================
+   ADD THIS INSIDE .sidebar-nav
+   REPLACE YOUR CURRENT NAVIGATION
+========================================= -->
+
+<nav class="sidebar-nav">
+
+    <a href="#dashboard" class="nav-link active">
+        <span>🏠</span>
+        Dashboard
+    </a>
+
+    <a href="#projects" class="nav-link">
+        <span>📐</span>
+        Projects
+    </a>
+
+    <a href="#clients" class="nav-link">
+        <span>👥</span>
+        Clients
+    </a>
+
+    <a href="#team" class="nav-link">
+        <span>🧑‍💼</span>
+        Team
+    </a>
+
+    <a href="#payments" class="nav-link">
+        <span>💳</span>
+        Payments
+    </a>
+
+    <a href="#analytics" class="nav-link">
+        <span>📊</span>
+        Analytics
+    </a>
+
+    <a href="#messages" class="nav-link">
+        <span>💬</span>
+        Messages
+    </a>
+
+    <a href="#calendar" class="nav-link">
+        <span>📅</span>
+        Calendar
+    </a>
+
+    <a href="#inventory" class="nav-link">
+        <span>🪵</span>
+        Inventory
+    </a>
+
+    <a href="#settings" class="nav-link">
+        <span>⚙️</span>
+        Settings
+    </a>
+
+</nav>
+        
+    </aside>
+
+    <!-- =========================================
+       MAIN CONTENT
+    ========================================== -->
+
+    <main class="main">
+
+        <!-- =========================================
+           TOPBAR
+        ========================================== -->
+<header class="topbar glass">
+
+    <!-- LEFT -->
+
+    <div class="dashboard-heading">
+
+        <span class="dashboard-tag">
+            Stackly Interior Design
+        </span>
+
+        <h1>Admin Dashboard</h1>
+
+    </div>
+
+    <!-- RIGHT -->
+
+    <div class="topbar-right">
+
+
+        <!-- USER PROFILE -->
+
+        <div class="user-profile glass">
+
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400"
+                alt="Admin">
+
+            <div class="user-details">
+                <h4>Hari Krishnan</h4>
+                <p>harikrishnan@gmail.com</p>
+            </div>
+
+        </div>
+
+        <!-- LOGOUT -->
+
+        <button class="logout-btn">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+        <!-- =========================================
+           HERO SECTION
+        ========================================== -->
+
+        <section class="hero glass fade-up">
+
+            <div>
+                <span class="tag">Luxury Interior Platform</span>
+                <h1>Cinematic Interior Dashboard Experience</h1>
+                <p>
+                    Manage luxury architecture projects, premium clients,
+                    revenue analytics, smart interiors, and design workflows
+                    in one elegant workspace.
+                </p>
+
+                <div class="hero-buttons">
+                    <button class="primary-btn">Explore Projects</button>
+                    <button class="secondary-btn">View Analytics</button>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1400"
+                    alt="">
+            </div>
+
+        </section>
+
+        <!-- =========================================
+           STATS
+        ========================================== -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card glass">
+                <div class="stat-top">
+                    <span>Total Projects</span>
+                    <div class="icon">🏠</div>
+                </div>
+
+                <h2 class="counter" data-target="128">0</h2>
+                <p class="success">+12% this month</p>
+            </div>
+
+            <div class="stat-card glass">
+                <div class="stat-top">
+                    <span>Active Clients</span>
+                    <div class="icon">👥</div>
+                </div>
+
+                <h2 class="counter" data-target="84">0</h2>
+                <p class="success">+8% growth</p>
+            </div>
+
+            <div class="stat-card glass">
+                <div class="stat-top">
+                    <span>Revenue</span>
+                    <div class="icon">💰</div>
+                </div>
+
+                <h2>$2.4M</h2>
+                <p class="success">Luxury contracts rising</p>
+            </div>
+
+            <div class="stat-card glass">
+                <div class="stat-top">
+                    <span>Pending Quotations</span>
+                    <div class="icon">📄</div>
+                </div>
+
+                <h2 class="counter" data-target="24">0</h2>
+                <p class="warning">Awaiting approval</p>
+            </div>
+
+        </section>
+
+        <!-- =========================================
+           CHARTS
+        ========================================== -->
+
+        <section class="charts-grid">
+
+            <div class="chart-card glass">
+                <div class="section-title">
+                    <h3>Monthly Revenue</h3>
+                </div>
+
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+            <div class="chart-card glass">
+                <div class="section-title">
+                    <h3>Project Completion</h3>
+                </div>
+
+                <canvas id="projectChart"></canvas>
+            </div>
+
+        </section>
+
+        <!-- =========================================
+           PROJECTS TABLE
+        ========================================== -->
+
+        <section class="glass table-section">
+
+            <div class="section-title">
+                <h3>Recent Projects</h3>
+                <button class="secondary-btn small">View All</button>
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Project</th>
+                            <th>Budget</th>
+                            <th>Status</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                            <td>Daniel Parker</td>
+                            <td>Luxury Villa</td>
+                            <td>$140,000</td>
+                            <td><span class="badge success-badge">Active</span></td>
+                            <td>
+                                <div class="progress">
+                                    <div style="width:78%"></div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Sophia Carter</td>
+                            <td>Modern Office</td>
+                            <td>$90,000</td>
+                            <td><span class="badge warning-badge">Planning</span></td>
+                            <td>
+                                <div class="progress">
+                                    <div style="width:52%"></div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Michael James</td>
+                            <td>Penthouse Interior</td>
+                            <td>$210,000</td>
+                            <td><span class="badge success-badge">Completed</span></td>
+                            <td>
+                                <div class="progress">
+                                    <div style="width:100%"></div>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- =========================================
+           TEAM SECTION
+        ========================================== -->
+
+        <section class="team-grid">
+
+            <div class="team-card glass">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400"
+                    alt="">
+
+                <h4>Olivia Grace</h4>
+                <p>Senior Architect</p>
+
+                <div class="online"></div>
+
+                <button class="primary-btn small">Contact</button>
+            </div>
+
+            <div class="team-card glass">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400"
+                    alt="">
+
+                <h4>James Oliver</h4>
+                <p>Interior Designer</p>
+
+                <div class="online"></div>
+
+                <button class="primary-btn small">Contact</button>
+            </div>
+
+            <div class="team-card glass">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400"
+                    alt="">
+
+                <h4>Emma Watson</h4>
+                <p>Project Manager</p>
+
+                <div class="online"></div>
+
+                <button class="primary-btn small">Contact</button>
+            </div>
+
+        </section>
+
+        <!-- =========================================
+   ADD BELOW TEAM SECTION
+========================================= -->
+
+<!-- =========================================
+   CLIENT INQUIRIES
+========================================= -->
+
+<section class="inquiry-section" id="clients">
+
+    <div class="section-title">
+        <h2>Client Inquiries</h2>
+        <button class="secondary-btn small">
+            View All
+        </button>
+    </div>
+
+    <div class="inquiry-grid">
+
+        <div class="inquiry-card glass">
+            <div class="inquiry-top">
+                <h3>Luxury Villa Interior</h3>
+                <span class="badge success-badge">High Priority</span>
+            </div>
+
+            <p>
+                Client requested premium Italian marble,
+                cinematic lighting, and smart home integration.
+            </p>
+
+            <div class="inquiry-footer">
+                <span>Daniel Parker</span>
+                <button class="primary-btn small">
+                    Reply
+                </button>
+            </div>
+        </div>
+
+        <div class="inquiry-card glass">
+            <div class="inquiry-top">
+                <h3>Office Workspace Design</h3>
+                <span class="badge warning-badge">Pending</span>
+            </div>
+
+            <p>
+                Modern collaborative workspace with earthy tones
+                and luxury meeting room interiors.
+            </p>
+
+            <div class="inquiry-footer">
+                <span>Sophia Carter</span>
+                <button class="primary-btn small">
+                    Reply
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+   PAYMENTS SECTION
+========================================= -->
+
+<section class="payments-section" id="payments">
+
+    <div class="section-title">
+        <h2>Invoices & Payments</h2>
+    </div>
+
+    <div class="payments-grid">
+
+        <div class="payment-card glass">
+            <h3>Total Revenue</h3>
+            <h1>$2.4M</h1>
+            <p class="success">+18% Growth</p>
+        </div>
+
+        <div class="payment-card glass">
+            <h3>Pending Invoices</h3>
+            <h1>14</h1>
+            <p class="warning">Awaiting payment</p>
+        </div>
+
+        <div class="payment-card glass">
+            <h3>Completed Transactions</h3>
+            <h1>324</h1>
+            <p class="success">Stable revenue</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+   INVENTORY SECTION
+========================================= -->
+
+<section class="inventory-section" id="inventory">
+
+    <div class="section-title">
+        <h2>Material Inventory</h2>
+    </div>
+
+    <div class="inventory-grid">
+
+        <div class="inventory-card glass">
+            <h3>Italian Marble</h3>
+            <p>Stock Available: 78%</p>
+
+            <div class="progress">
+                <div style="width:78%"></div>
+            </div>
+        </div>
+
+        <div class="inventory-card glass">
+            <h3>Wood Panels</h3>
+            <p>Stock Available: 52%</p>
+
+            <div class="progress">
+                <div style="width:52%"></div>
+            </div>
+        </div>
+
+        <div class="inventory-card glass">
+            <h3>Luxury Lighting</h3>
+            <p>Stock Available: 91%</p>
+
+            <div class="progress">
+                <div style="width:91%"></div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+   MESSAGES SECTION
+========================================= -->
+
+<section class="messages-section" id="messages">
+
+    <div class="section-title">
+        <h2>Messages</h2>
+    </div>
+
+    <div class="messages-wrapper glass">
+
+        <div class="message">
+
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400"
+                alt="">
+
+            <div>
+                <h4>Emma Watson</h4>
+                <p>
+                    The luxury villa project moodboard
+                    has been updated.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="message">
+
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400"
+                alt="">
+
+            <div>
+                <h4>James Oliver</h4>
+                <p>
+                    New material samples arrived from Italy.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+   TIMELINE SECTION
+========================================= -->
+
+<section class="timeline-section">
+
+    <div class="section-title">
+        <h2>Recent Activity</h2>
+    </div>
+
+    <div class="timeline glass">
+
+        <div class="timeline-item">
+            <span class="dot"></span>
+
+            <div>
+                <h4>Luxury Villa Project Updated</h4>
+                <p>2 hours ago</p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <span class="dot"></span>
+
+            <div>
+                <h4>Payment Received from Sophia Carter</h4>
+                <p>5 hours ago</p>
+            </div>
+        </div>
+
+        <div class="timeline-item">
+            <span class="dot"></span>
+
+            <div>
+                <h4>New Interior Consultation Scheduled</h4>
+                <p>Yesterday</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+   SETTINGS SECTION
+========================================= -->
+
+<section class="settings-section" id="settings">
+
+    <div class="section-title">
+        <h2>Settings</h2>
+    </div>
+
+    <div class="settings-grid">
+
+        <div class="settings-card glass">
+            <h3>Theme Mode</h3>
+
+            <button class="primary-btn">
+                Toggle Theme
+            </button>
+        </div>
+
+        <div class="settings-card glass">
+            <h3>Notifications</h3>
+
+            <label class="switch">
+                <input type="checkbox" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div class="settings-card glass">
+            <h3>Security</h3>
+
+            <button class="secondary-btn">
+                Update Password
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+    </main>
+
+ <script>
+/* =========================================
+   MOBILE SIDEBAR
+========================================= */
+
+const mobileToggle = document.getElementById("mobileToggle");
+const sidebar      = document.getElementById("sidebar");
+
+if (mobileToggle && sidebar) {
+    mobileToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("active");
+    });
+}
+
+/* =========================================
+   ACTIVE SIDEBAR LINKS
+========================================= */
+
+const navLinks = document.querySelectorAll(".nav-link");
+
+navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+
+        navLinks.forEach(item => item.classList.remove("active"));
+        link.classList.add("active");
+
+        if (window.innerWidth < 900 && sidebar) {
+            sidebar.classList.remove("active");
+        }
+    });
+});
+
+/* =========================================
+   COUNTER ANIMATION
+========================================= */
+
+function animateCounter(counter) {
+    if (counter.dataset.animated) return;
+    counter.dataset.animated = "true";
+
+    const target    = +counter.getAttribute("data-target");
+    let   current   = 0;
+    const increment = target / 80;
+
+    const updateCounter = () => {
+        current += increment;
+        if (current < target) {
+            counter.innerText = Math.ceil(current);
+            requestAnimationFrame(updateCounter);
+        } else {
+            counter.innerText = target;
+        }
+    };
+
+    updateCounter();
+}
+
+/* =========================================
+   CHART INITIALISATION (lazy)
+   FIX: charts are created only AFTER their
+   section is revealed, so the canvas always
+   has real dimensions when Chart.js measures it.
+========================================= */
+
+let revenueChartCreated = false;
+let projectChartCreated = false;
+
+function initRevenueChart() {
+    if (revenueChartCreated) return;
+    revenueChartCreated = true;
+
+    const canvas = document.getElementById("revenueChart");
+    if (!canvas) return;
+
+    new Chart(canvas, {
+        type: "line",
+        data: {
+            labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+            datasets: [{
+                label: "Revenue",
+                data: [12000, 19000, 30000, 42000, 50000, 62000],
+                borderColor: "#d6b98c",
+                backgroundColor: "rgba(214,185,140,.12)",
+                fill: true,
+                tension: .4,
+                borderWidth: 3,
+                pointRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: "#ffffff" } } },
+            scales: {
+                y: { ticks: { color: "#ffffff" }, grid: { color: "rgba(255,255,255,.08)" } },
+                x: { ticks: { color: "#ffffff" }, grid: { color: "rgba(255,255,255,.08)" } }
+            }
+        }
+    });
+}
+
+function initProjectChart() {
+    if (projectChartCreated) return;
+    projectChartCreated = true;
+
+    const canvas = document.getElementById("projectChart");
+    if (!canvas) return;
+
+    new Chart(canvas, {
+        type: "doughnut",
+        data: {
+            labels: ["Completed", "Ongoing", "Planning"],
+            datasets: [{
+                data: [58, 28, 14],
+                backgroundColor: ["#d6b98c", "#395246", "#ffffff"],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: "#ffffff" } } }
+        }
+    });
+}
+
+/* =========================================
+   SMOOTH SCROLL
+========================================= */
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute("href"));
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+});
+
+/* =========================================
+   SCROLL REVEAL + COUNTER + CHART TRIGGER
+========================================= */
+
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+
+        entry.target.classList.add("show");
+
+        // Counters
+        entry.target.querySelectorAll(".counter").forEach(animateCounter);
+
+        // Charts — only init once the section is actually visible
+        if (entry.target.querySelector("#revenueChart")) initRevenueChart();
+        if (entry.target.querySelector("#projectChart")) initProjectChart();
+
+        // Stop watching — reveal + init happen only once
+        observer.unobserve(entry.target);
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll("section").forEach(section => {
+    section.classList.add("hidden");
+    observer.observe(section);
+});
+
+/* =========================================
+   LOGOUT BUTTON
+========================================= */
+
+const logoutBtn = document.querySelector(".logout-btn");
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+        alert("Logged out successfully!");
+    });
+}
+</script>
+
+</body>
+
+</html>

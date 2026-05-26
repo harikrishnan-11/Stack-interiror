@@ -32,3 +32,53 @@ document.querySelectorAll(".service-card").forEach((card) => {
     });
 
 });
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
+
+const reveals = document.querySelectorAll(".reveal");
+
+const revealOnScroll = () => {
+
+    reveals.forEach((element) => {
+
+        const windowHeight = window.innerHeight;
+        const revealTop = element.getBoundingClientRect().top;
+        const revealPoint = 100;
+
+        if (revealTop < windowHeight - revealPoint) {
+            element.classList.add("active");
+        }
+
+    });
+
+};
+
+window.addEventListener("scroll", revealOnScroll);
+
+revealOnScroll();
+
+/* =========================================================
+   TIMELINE PROGRESS
+========================================================= */
+
+const timeline = document.querySelector(".timeline");
+const progress = document.getElementById("timelineProgress");
+
+window.addEventListener("scroll", () => {
+
+    const rect = timeline.getBoundingClientRect();
+
+    const windowHeight = window.innerHeight;
+
+    const totalHeight = rect.height;
+
+    const visible = windowHeight - rect.top;
+
+    let percent = (visible / totalHeight) * 100;
+
+    percent = Math.max(0, Math.min(percent, 100));
+
+    progress.style.height = percent + "%";
+
+});

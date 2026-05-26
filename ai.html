@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Interiors | Transforming Spaces Into Stories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'warm': {
+                            50: '#faf8f5',
+                            100: '#f5f0e8',
+                            200: '#e8e0d0',
+                            300: '#d4c8b0',
+                            400: '#b8a88a',
+                            500: '#9c8b6a',
+                            600: '#7d6e52',
+                            700: '#5e5240',
+                            800: '#3f3628',
+                            900: '#201c16',
+                        },
+                        'sage': {
+                            50: '#f4f7f4',
+                            100: '#e3ebe3',
+                            200: '#c7d8c7',
+                            300: '#a3bfa3',
+                            400: '#7a9e7a',
+                            500: '#5c825c',
+                            600: '#486848',
+                            700: '#3a523a',
+                            800: '#2d3d2d',
+                            900: '#1f2a1f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(32,28,22,0.85) 0%, rgba(62,52,40,0.75) 50%, rgba(92,82,60,0.65) 100%);
+        }
+        
+        .text-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .text-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .image-hover {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .image-hover:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-blur {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .portfolio-overlay {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .testimonial-slide {
+            transition: all 0.5s ease;
+        }
+        
+        .line-draw {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: draw 2s ease forwards;
+        }
+        
+        @keyframes draw {
+            to { stroke-dashoffset: 0; }
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .cursor-glow {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(156,139,106,0.15) 0%, transparent 70%);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.3s;
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .accordion-content.active {
+            max-height: 500px;
+        }
+        
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-icon.active {
+            transform: rotate(180deg);
+        }
+        
+        .progress-bar {
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .marquee {
+            animation: marquee 30s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="font-sans text-warm-900 bg-warm-50 antialiased overflow-x-hidden">
+
+    <div class="grain"></div>
+    <div class="cursor-glow hidden lg:block" id="cursorGlow"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-500 py-6">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between">
+                <a href="#" class="text-2xl font-serif font-bold tracking-tight text-white nav-text transition-colors duration-300">
+                    Lumina<span class="text-warm-400">.</span>
+                </a>
+                
+                <div class="hidden lg:flex items-center space-x-10">
+                    <a href="#about" class="nav-link text-sm uppercase tracking-widest text-white/80 hover:text-white transition-colors">About</a>
+                    <a href="#services" class="nav-link text-sm uppercase tracking-widest text-white/80 hover:text-white transition-colors">Services</a>
+                    <a href="#portfolio" class="nav-link text-sm uppercase tracking-widest text-white/80 hover:text-white transition-colors">Portfolio</a>
+                    <a href="#process" class="nav-link text-sm uppercase tracking-widest text-white/80 hover:text-white transition-colors">Process</a>
+                    <a href="#contact" class="px-6 py-3 bg-white text-warm-900 text-sm uppercase tracking-widest hover:bg-warm-100 transition-colors">Get in Touch</a>
+                </div>
+                
+                <button id="mobileMenuBtn" class="lg:hidden text-white nav-text">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden absolute top-full left-0 w-full bg-warm-900/95 nav-blur py-8">
+            <div class="flex flex-col items-center space-y-6">
+                <a href="#about" class="text-white text-lg">About</a>
+                <a href="#services" class="text-white text-lg">Services</a>
+                <a href="#portfolio" class="text-white text-lg">Portfolio</a>
+                <a href="#process" class="text-white text-lg">Process</a>
+                <a href="#contact" class="text-white text-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen w-full overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=1920&q=80" 
+                 alt="Luxury Interior" 
+                 class="w-full h-full object-cover scale-110 animate-[pulse_20s_ease-in-out_infinite]">
+        </div>
+        <div class="absolute inset-0 hero-gradient"></div>
+        
+        <div class="relative h-full flex items-center justify-center text-center px-6">
+            <div class="max-w-5xl">
+                <p class="text-reveal text-warm-300 uppercase tracking-[0.3em] text-sm mb-6 font-medium">Est. 2015 — Award Winning Studio</p>
+                <h1 class="text-reveal text-5xl md:text-7xl lg:text-8xl font-serif text-white leading-[0.9] mb-8">
+                    Where Design<br>
+                    <span class="italic text-warm-300">Meets</span> Living
+                </h1>
+                <p class="text-reveal text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                    We craft bespoke interiors that tell your unique story. From concept to completion, every detail is curated to transform houses into homes and spaces into experiences.
+                </p>
+                <div class="text-reveal flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#portfolio" class="px-8 py-4 bg-white text-warm-900 text-sm uppercase tracking-widest hover:bg-warm-100 transition-all transform hover:scale-105">
+                        View Our Work
+                    </a>
+                    <a href="#contact" class="px-8 py-4 border border-white/30 text-white text-sm uppercase tracking-widest hover:bg-white/10 transition-all">
+                        Start a Project
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="chevron-down" class="w-6 h-6 text-white/50"></i>
+        </div>
+    </section>
+
+    <!-- Marquee Strip -->
+    <div class="bg-warm-900 py-4 overflow-hidden">
+        <div class="marquee whitespace-nowrap flex">
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Residential Design</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Commercial Spaces</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Hospitality</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Sustainable Design</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Furniture Curation</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Residential Design</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Commercial Spaces</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Hospitality</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Sustainable Design</span>
+            <span class="text-warm-600 mx-4">•</span>
+            <span class="text-warm-400 text-sm uppercase tracking-[0.2em] mx-8">Furniture Curation</span>
+            <span class="text-warm-600 mx-4">•</span>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 lg:py-32 bg-warm-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <div class="relative z-10">
+                        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=80" 
+                             alt="Interior Design Studio" 
+                             class="w-full h-[600px] object-cover rounded-sm shadow-2xl">
+                    </div>
+                    <div class="absolute -bottom-8 -right-8 w-64 h-64 bg-sage-200/50 -z-0 rounded-sm"></div>
+                    <div class="absolute -top-8 -left-8 w-48 h-48 border-2 border-warm-300/50 -z-0 rounded-sm"></div>
+                    
+                    <div class="absolute bottom-12 -right-6 bg-white p-6 shadow-xl rounded-sm max-w-xs float">
+                        <p class="font-serif text-2xl text-warm-900 mb-2">12+</p>
+                        <p class="text-warm-600 text-sm uppercase tracking-wider">Years of Excellence</p>
+                    </div>
+                </div>
+                
+                <div class="lg:pl-8">
+                    <p class="text-sage-600 uppercase tracking-[0.2em] text-sm mb-4 font-medium">About Lumina</p>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-warm-900 mb-6 leading-tight">
+                        Creating Timeless<br>Spaces Since 2015
+                    </h2>
+                    <p class="text-warm-600 text-lg leading-relaxed mb-6">
+                        At Lumina Interiors, we believe that great design is invisible. It doesn't scream for attention; it quietly enhances your daily life. Our multidisciplinary team of designers, architects, and artisans work collaboratively to deliver spaces that are both functional and breathtaking.
+                    </p>
+                    <p class="text-warm-600 leading-relaxed mb-8">
+                        From modern minimalist apartments to grand traditional estates, we approach each project with fresh eyes and an unwavering commitment to quality. Our process is deeply personal—we listen first, design second, and perfect always.
+                    </p>
+                    
+                    <div class="grid grid-cols-3 gap-8 mb-8">
+                        <div>
+                            <p class="text-3xl font-serif text-warm-900 counter" data-target="250">0</p>
+                            <p class="text-warm-500 text-sm uppercase tracking-wider mt-1">Projects</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-serif text-warm-900 counter" data-target="48">0</p>
+                            <p class="text-warm-500 text-sm uppercase tracking-wider mt-1">Awards</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-serif text-warm-900 counter" data-target="35">0</p>
+                            <p class="text-warm-500 text-sm uppercase tracking-wider mt-1">Designers</p>
+                        </div>
+                    </div>
+                    
+                    <a href="#team" class="inline-flex items-center text-warm-900 uppercase tracking-widest text-sm hover:text-sage-600 transition-colors group">
+                        Meet Our Team 
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-2 transform group-hover:translate-x-2 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <p class="text-sage-600 uppercase tracking-[0.2em] text-sm mb-4 font-medium">What We Do</p>
+                <h2 class="text-4xl lg:text-5xl font-serif text-warm-900 mb-6">Our Services</h2>
+                <p class="text-warm-600 max-w-2xl mx-auto text-lg">
+                    Comprehensive interior solutions tailored to your lifestyle, budget, and aesthetic vision.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="service-card group p-8 bg-warm-50 rounded-sm border border-warm-100">
+                    <div class="w-14 h-14 bg-sage-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-sage-200 transition-colors">
+                        <i data-lucide="home" class="w-6 h-6 text-sage-700"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-warm-900 mb-3">Residential Design</h3>
+                    <p class="text-warm-600 leading-relaxed mb-4">
+                        Full-service interior design for homes, apartments, and estates. From single rooms to complete renovations.
+                    </p>
+                    <ul class="space-y-2 text-sm text-warm-500">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Space Planning</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Custom Furniture</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Art Curation</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card group p-8 bg-warm-50 rounded-sm border border-warm-100">
+                    <div class="w-14 h-14 bg-sage-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-sage-200 transition-colors">
+                        <i data-lucide="building-2" class="w-6 h-6 text-sage-700"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-warm-900 mb-3">Commercial Spaces</h3>
+                    <p class="text-warm-600 leading-relaxed mb-4">
+                        Strategic design for offices, retail, and hospitality that enhances brand identity and user experience.
+                    </p>
+                    <ul class="space-y-2 text-sm text-warm-500">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Brand Integration</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Workflow Optimization</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Lighting Design</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card group p-8 bg-warm-50 rounded-sm border border-warm-100">
+                    <div class="w-14 h-14 bg-sage-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-sage-200 transition-colors">
+                        <i data-lucide="palette" class="w-6 h-6 text-sage-700"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-warm-900 mb-3">Color Consultation</h3>
+                    <p class="text-warm-600 leading-relaxed mb-4">
+                        Expert color psychology and palette development to create the perfect atmosphere for any space.
+                    </p>
+                    <ul class="space-y-2 text-sm text-warm-500">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Custom Palettes</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Material Matching</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Finish Selection</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card group p-8 bg-warm-50 rounded-sm border border-warm-100">
+                    <div class="w-14 h-14 bg-sage-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-sage-200 transition-colors">
+                        <i data-lucide="sofa" class="w-6 h-6 text-sage-700"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-warm-900 mb-3">Furniture Design</h3>
+                    <p class="text-warm-600 leading-relaxed mb-4">
+                        Bespoke furniture pieces and custom upholstery that perfectly fit your space and style requirements.
+                    </p>
+                    <ul class="space-y-2 text-sm text-warm-500">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Custom Pieces</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Restoration</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Reupholstery</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card group p-8 bg-warm-50 rounded-sm border border-warm-100">
+                    <div class="w-14 h-14 bg-sage-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-sage-200 transition-colors">
+                        <i data-lucide="leaf" class="w-6 h-6 text-sage-700"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-warm-900 mb-3">Sustainable Design</h3>
+                    <p class="text-warm-600 leading-relaxed mb-4">
+                        Eco-conscious design solutions using sustainable materials, energy-efficient systems, and biophilic principles.
+                    </p>
+                    <ul class="space-y-2 text-sm text-warm-500">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Eco Materials</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Energy Efficiency</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Biophilic Design</li>
+                    </ul>
+                </div>
+                
+                <div class="service-card group p-8 bg-warm-50 rounded-sm border border-warm-100">
+                    <div class="w-14 h-14 bg-sage-100 rounded-full flex items-center justify-center mb-6 group-hover:bg-sage-200 transition-colors">
+                        <i data-lucide="ruler" class="w-6 h-6 text-sage-700"></i>
+                    </div>
+                    <h3 class="text-xl font-serif text-warm-900 mb-3">Project Management</h3>
+                    <p class="text-warm-600 leading-relaxed mb-4">
+                        End-to-end project coordination from concept through installation, ensuring seamless execution.
+                    </p>
+                    <ul class="space-y-2 text-sm text-warm-500">
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Vendor Coordination</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Timeline Management</li>
+                        <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2 text-sage-500"></i>Quality Control</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-24 lg:py-32 bg-warm-50">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row justify-between items-end mb-16">
+                <div>
+                    <p class="text-sage-600 uppercase tracking-[0.2em] text-sm mb-4 font-medium">Our Work</p>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-warm-900">Featured Projects</h2>
+                </div>
+                
+                <div class="flex gap-4 mt-6 lg:mt-0">
+                    <button class="filter-btn active px-6 py-2 text-sm uppercase tracking-wider border border-warm-900 bg-warm-900 text-white transition-all" data-filter="all">All</button>
+                    <button class="filter-btn px-6 py-2 text-sm uppercase tracking-wider border border-warm-300 text-warm-600 hover:border-warm-900 hover:text-warm-900 transition-all" data-filter="residential">Residential</button>
+                    <button class="filter-btn px-6 py-2 text-sm uppercase tracking-wider border border-warm-300 text-warm-600 hover:border-warm-900 hover:text-warm-900 transition-all" data-filter="commercial">Commercial</button>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolioGrid">
+                <div class="portfolio-item group relative overflow-hidden rounded-sm cursor-pointer" data-category="residential">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" 
+                             alt="Modern Living Room" 
+                             class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="portfolio-overlay absolute inset-0 bg-warm-900/80 flex flex-col justify-end p-8">
+                        <p class="text-warm-300 text-sm uppercase tracking-wider mb-2">Residential</p>
+                        <h3 class="text-white font-serif text-2xl mb-2">The Hudson Penthouse</h3>
+                        <p class="text-white/70 text-sm">New York, NY — 3,200 sq ft</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item group relative overflow-hidden rounded-sm cursor-pointer" data-category="commercial">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80" 
+                             alt="Office Space" 
+                             class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="portfolio-overlay absolute inset-0 bg-warm-900/80 flex flex-col justify-end p-8">
+                        <p class="text-warm-300 text-sm uppercase tracking-wider mb-2">Commercial</p>
+                        <h3 class="text-white font-serif text-2xl mb-2">Meridian HQ</h3>
+                        <p class="text-white/70 text-sm">Chicago, IL — 12,000 sq ft</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item group relative overflow-hidden rounded-sm cursor-pointer" data-category="residential">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&q=80" 
+                             alt="Minimalist Bedroom" 
+                             class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="portfolio-overlay absolute inset-0 bg-warm-900/80 flex flex-col justify-end p-8">
+                        <p class="text-warm-300 text-sm uppercase tracking-wider mb-2">Residential</p>
+                        <h3 class="text-white font-serif text-2xl mb-2">Coastal Retreat</h3>
+                        <p class="text-white/70 text-sm">Malibu, CA — 4,500 sq ft</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item group relative overflow-hidden rounded-sm cursor-pointer" data-category="commercial">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" 
+                             alt="Restaurant Interior" 
+                             class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="portfolio-overlay absolute inset-0 bg-warm-900/80 flex flex-col justify-end p-8">
+                        <p class="text-warm-300 text-sm uppercase tracking-wider mb-2">Commercial</p>
+                        <h3 class="text-white font-serif text-2xl mb-2">Sage Restaurant</h3>
+                        <p class="text-white/70 text-sm">Portland, OR — 2,800 sq ft</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item group relative overflow-hidden rounded-sm cursor-pointer" data-category="residential">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=600&q=80" 
+                             alt="Luxury Kitchen" 
+                             class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="portfolio-overlay absolute inset-0 bg-warm-900/80 flex flex-col justify-end p-8">
+                        <p class="text-warm-300 text-sm uppercase tracking-wider mb-2">Residential</p>
+                        <h3 class="text-white font-serif text-2xl mb-2">The Oak Estate</h3>
+                        <p class="text-white/70 text-sm">Dallas, TX — 6,000 sq ft</p>
+                    </div>
+                </div>
+                
+                <div class="portfolio-item group relative overflow-hidden rounded-sm cursor-pointer" data-category="commercial">
+                    <div class="aspect-[4/5] overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1600607687644-c7171b42498b?w=600&q=80" 
+                             alt="Boutique Hotel" 
+                             class="w-full h-full object-cover transition-transform duration-700">
+                    </div>
+                    <div class="portfolio-overlay absolute inset-0 bg-warm-900/80 flex flex-col justify-end p-8">
+                        <p class="text-warm-300 text-sm uppercase tracking-wider mb-2">Commercial</p>
+                        <h3 class="text-white font-serif text-2xl mb-2">The Laurel Hotel</h3>
+                        <p class="text-white/70 text-sm">Austin, TX — 15,000 sq ft</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="px-8 py-4 border-2 border-warm-900 text-warm-900 text-sm uppercase tracking-widest hover:bg-warm-900 hover:text-white transition-all">
+                    View All Projects
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-24 lg:py-32 bg-warm-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1920&q=80" 
+                 alt="Background" 
+                 class="w-full h-full object-cover">
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20">
+                <p class="text-warm-300 uppercase tracking-[0.2em] text-sm mb-4 font-medium">How We Work</p>
+                <h2 class="text-4xl lg:text-5xl font-serif mb-6">Our Design Process</h2>
+                <p class="text-warm-300 max-w-2xl mx-auto text-lg">
+                    A refined methodology that ensures every project is delivered with precision, creativity, and care.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="relative">
+                    <div class="text-6xl font-serif text-warm-700 mb-4">01</div>
+                    <h3 class="text-xl font-serif mb-3">Discovery</h3>
+                    <p class="text-warm-300 leading-relaxed text-sm">
+                        We begin with an in-depth consultation to understand your lifestyle, preferences, and the unique character of your space.
+                    </p>
+                    <div class="hidden lg:block absolute top-8 right-0 w-full h-px bg-warm-700/50 transform translate-x-1/2"></div>
+                </div>
+                
+                <div class="relative">
+                    <div class="text-6xl font-serif text-warm-700 mb-4">02</div>
+                    <h3 class="text-xl font-serif mb-3">Concept</h3>
+                    <p class="text-warm-300 leading-relaxed text-sm">
+                        Our designers develop mood boards, 3D renderings, and material palettes that bring your vision to life.
+                    </p>
+                    <div class="hidden lg:block absolute top-8 right-0 w-full h-px bg-warm-700/50 transform translate-x-1/2"></div>
+                </div>
+                
+                <div class="relative">
+                    <div class="text-6xl font-serif text-warm-700 mb-4">03</div>
+                    <h3 class="text-xl font-serif mb-3">Development</h3>
+                    <p class="text-warm-300 leading-relaxed text-sm">
+                        We refine every detail, from custom furniture specifications to lighting layouts, ensuring cohesive design.
+                    </p>
+                    <div class="hidden lg:block absolute top-8 right-0 w-full h-px bg-warm-700/50 transform translate-x-1/2"></div>
+                </div>
+                
+                <div class="relative">
+                    <div class="text-6xl font-serif text-warm-700 mb-4">04</div>
+                    <h3 class="text-xl font-serif mb-3">Delivery</h3>
+                    <p class="text-warm-300 leading-relaxed text-sm">
+                        Final installation and styling with meticulous attention to detail, transforming plans into reality.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-sage-600 uppercase tracking-[0.2em] text-sm mb-4 font-medium">Testimonials</p>
+                <h2 class="text-4xl lg:text-5xl font-serif text-warm-900">Client Stories</h2>
+            </div>
+            
+            <div class="relative max-w-4xl mx-auto">
+                <div id="testimonialContainer" class="overflow-hidden">
+                    <div id="testimonialSlider" class="flex transition-transform duration-500">
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="text-center">
+                                <i data-lucide="quote" class="w-12 h-12 text-sage-300 mx-auto mb-6"></i>
+                                <p class="text-2xl lg:text-3xl font-serif text-warm-900 leading-relaxed mb-8">
+                                    "Lumina transformed our house into a home we never want to leave. Their attention to detail and understanding of our family's needs was extraordinary."
+                                </p>
+                                <div class="flex items-center justify-center gap-4">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" 
+                                         alt="Sarah Mitchell" 
+                                         class="w-14 h-14 rounded-full object-cover">
+                                    <div class="text-left">
+                                        <p class="font-medium text-warm-900">Sarah Mitchell</p>
+                                        <p class="text-warm-500 text-sm">Hudson Penthouse, NYC</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="text-center">
+                                <i data-lucide="quote" class="w-12 h-12 text-sage-300 mx-auto mb-6"></i>
+                                <p class="text-2xl lg:text-3xl font-serif text-warm-900 leading-relaxed mb-8">
+                                    "Working with Lumina on our office redesign was seamless. They captured our brand essence while creating a space that inspires our team daily."
+                                </p>
+                                <div class="flex items-center justify-center gap-4">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" 
+                                         alt="James Chen" 
+                                         class="w-14 h-14 rounded-full object-cover">
+                                    <div class="text-left">
+                                        <p class="font-medium text-warm-900">James Chen</p>
+                                        <p class="text-warm-500 text-sm">Meridian HQ, Chicago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full flex-shrink-0 px-4">
+                            <div class="text-center">
+                                <i data-lucide="quote" class="w-12 h-12 text-sage-300 mx-auto mb-6"></i>
+                                <p class="text-2xl lg:text-3xl font-serif text-warm-900 leading-relaxed mb-8">
+                                    "The sustainable approach Lumina took with our beach house was remarkable. Eco-friendly never looked so luxurious."
+                                </p>
+                                <div class="flex items-center justify-center gap-4">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" 
+                                         alt="Emma Rodriguez" 
+                                         class="w-14 h-14 rounded-full object-cover">
+                                    <div class="text-left">
+                                        <p class="font-medium text-warm-900">Emma Rodriguez</p>
+                                        <p class="text-warm-500 text-sm">Coastal Retreat, Malibu</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center gap-4 mt-12">
+                    <button id="prevTestimonial" class="w-12 h-12 rounded-full border border-warm-300 flex items-center justify-center hover:bg-warm-900 hover:text-white hover:border-warm-900 transition-all">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    </button>
+                    <button id="nextTestimonial" class="w-12 h-12 rounded-full border border-warm-300 flex items-center justify-center hover:bg-warm-900 hover:text-white hover:border-warm-900 transition-all">
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 lg:py-32 bg-warm-50">
+        <div class="max-w-3xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <p class="text-sage-600 uppercase tracking-[0.2em] text-sm mb-4 font-medium">FAQ</p>
+                <h2 class="text-4xl lg:text-5xl font-serif text-warm-900">Common Questions</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="accordion-item bg-white rounded-sm border border-warm-200 overflow-hidden">
+                    <button class="accordion-trigger w-full px-8 py-6 flex justify-between items-center text-left hover:bg-warm-50 transition-colors">
+                        <span class="font-serif text-lg text-warm-900">What is your typical project timeline?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-warm-500 rotate-icon"></i>
+                    </button>
+                    <div class="accordion-content px-8">
+                        <p class="text-warm-600 pb-6 leading-relaxed">
+                            Project timelines vary based on scope and complexity. A single room refresh typically takes 4-6 weeks, while full home renovations range from 3-6 months. We provide detailed timelines during our initial consultation and keep you updated throughout the process.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item bg-white rounded-sm border border-warm-200 overflow-hidden">
+                    <button class="accordion-trigger w-full px-8 py-6 flex justify-between items-center text-left hover:bg-warm-50 transition-colors">
+                        <span class="font-serif text-lg text-warm-900">How do you charge for your services?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-warm-500 rotate-icon"></i>
+                    </button>
+                    <div class="accordion-content px-8">
+                        <p class="text-warm-600 pb-6 leading-relaxed">
+                            We offer both flat-fee and hourly billing options depending on project type. Residential projects typically use a flat-fee structure based on square footage and complexity. Commercial projects may use a hybrid model. We provide transparent pricing upfront with no hidden costs.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item bg-white rounded-sm border border-warm-200 overflow-hidden">
+                    <button class="accordion-trigger w-full px-8 py-6 flex justify-between items-center text-left hover:bg-warm-50 transition-colors">
+                        <span class="font-serif text-lg text-warm-900">Do you work with existing furniture?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-warm-500 rotate-icon"></i>
+                    </button>
+                    <div class="accordion-content px-8">
+                        <p class="text-warm-600 pb-6 leading-relaxed">
+                            Absolutely. We love incorporating meaningful pieces into our designs. During our discovery phase, we assess your existing furniture and determine what can be reupholstered, refinished, or repositioned to work within the new design scheme.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="accordion-item bg-white rounded-sm border border-warm-200 overflow-hidden">
+                    <button class="accordion-trigger w-full px-8 py-6 flex justify-between items-center text-left hover:bg-warm-50 transition-colors">
+                        <span class="font-serif text-lg text-warm-900">Can you work within my budget?</span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-warm-500 rotate-icon"></i>
+                    </button>
+                    <div class="accordion-content px-8">
+                        <p class="text-warm-600 pb-6 leading-relaxed">
+                            Yes, we work with a wide range of budgets. We believe great design should be accessible. During our initial consultation, we discuss your budget openly and create a design plan that maximizes impact while respecting financial parameters. We also offer phased implementation options.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 lg:py-32 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <p class="text-sage-600 uppercase tracking-[0.2em] text-sm mb-4 font-medium">Get in Touch</p>
+                    <h2 class="text-4xl lg:text-5xl font-serif text-warm-900 mb-6">Start Your Project</h2>
+                    <p class="text-warm-600 text-lg leading-relaxed mb-12">
+                        Ready to transform your space? We'd love to hear about your project. Fill out the form and our team will reach out within 24 hours to schedule your complimentary consultation.
+                    </p>
+                    
+                    <div class="space-y-6 mb-12">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-sage-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-5 h-5 text-sage-700"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-warm-900 mb-1">Studio</p>
+                                <p class="text-warm-600">456 Design District<br>New York, NY 10013</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-sage-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="mail" class="w-5 h-5 text-sage-700"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-warm-900 mb-1">Email</p>
+                                <p class="text-warm-600">hello@luminainteriors.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-sage-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i data-lucide="phone" class="w-5 h-5 text-sage-700"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-warm-900 mb-1">Phone</p>
+                                <p class="text-warm-600">+1 (212) 555-0147</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-warm-100 flex items-center justify-center hover:bg-warm-900 hover:text-white transition-all">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-warm-100 flex items-center justify-center hover:bg-warm-900 hover:text-white transition-all">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-warm-100 flex items-center justify-center hover:bg-warm-900 hover:text-white transition-all">
+                            <i data-lucide="facebook" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-warm-100 flex items-center justify-center hover:bg-warm-900 hover:text-white transition-all">
+                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-warm-50 p-8 lg:p-12 rounded-sm border border-warm-100">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm uppercase tracking-wider text-warm-600 mb-2">First Name</label>
+                                <input type="text" required class="w-full px-4 py-3 bg-white border border-warm-200 rounded-sm focus:outline-none focus:border-sage-500 transition-colors" placeholder="John">
+                            </div>
+                            <div>
+                                <label class="block text-sm uppercase tracking-wider text-warm-600 mb-2">Last Name</label>
+                                <input type="text" required class="w-full px-4 py-3 bg-white border border-warm-200 rounded-sm focus:outline-none focus:border-sage-500 transition-colors" placeholder="Doe">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm uppercase tracking-wider text-warm-600 mb-2">Email</label>
+                            <input type="email" required class="w-full px-4 py-3 bg-white border border-warm-200 rounded-sm focus:outline-none focus:border-sage-500 transition-colors" placeholder="john@example.com">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm uppercase tracking-wider text-warm-600 mb-2">Project Type</label>
+                            <select class="w-full px-4 py-3 bg-white border border-warm-200 rounded-sm focus:outline-none focus:border-sage-500 transition-colors">
+                                <option>Residential</option>
+                                <option>Commercial</option>
+                                <option>Hospitality</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm uppercase tracking-wider text-warm-600 mb-2">Budget Range</label>
+                            <select class="w-full px-4 py-3 bg-white border border-warm-200 rounded-sm focus:outline-none focus:border-sage-500 transition-colors">
+                                <option>$25,000 - $50,000</option>
+                                <option>$50,000 - $100,000</option>
+                                <option>$100,000 - $250,000</option>
+                                <option>$250,000+</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm uppercase tracking-wider text-warm-600 mb-2">Message</label>
+                            <textarea rows="4" required class="w-full px-4 py-3 bg-white border border-warm-200 rounded-sm focus:outline-none focus:border-sage-500 transition-colors resize-none" placeholder="Tell us about your project..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-4 bg-warm-900 text-white text-sm uppercase tracking-widest hover:bg-warm-800 transition-colors flex items-center justify-center gap-2 group">
+                            Send Inquiry
+                            <i data-lucide="arrow-right" class="w-4 h-4 transform group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-warm-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div class="lg:col-span-2">
+                    <a href="#" class="text-3xl font-serif font-bold tracking-tight mb-6 block">
+                        Lumina<span class="text-warm-400">.</span>
+                    </a>
+                    <p class="text-warm-300 max-w-md leading-relaxed mb-6">
+                        Award-winning interior design studio creating timeless, functional, and deeply personal spaces for discerning clients worldwide.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="text-warm-400 hover:text-white transition-colors">Privacy Policy</a>
+                        <span class="text-warm-600">|</span>
+                        <a href="#" class="text-warm-400 hover:text-white transition-colors">Terms of Service</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm uppercase tracking-widest mb-6 text-warm-300">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-warm-400 hover:text-white transition-colors">Residential Design</a></li>
+                        <li><a href="#" class="text-warm-400 hover:text-white transition-colors">Commercial Spaces</a></li>
+                        <li><a href="#" class="text-warm-400 hover:text-white transition-colors">Furniture Design</a></li>
+                        <li><a href="#" class="text-warm-400 hover:text-white transition-colors">Sustainable Design</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-sm uppercase tracking-widest mb-6 text-warm-300">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-warm-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#portfolio" class="text-warm-400 hover:text-white transition-colors">Portfolio</a></li>
+                        <li><a href="#" class="text-warm-400 hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#contact" class="text-warm-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-warm-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-warm-500 text-sm"> 2026 Lumina Interiors. All rights reserved.</p>
+                <p class="text-warm-600 text-sm italic font-serif">Designed with intention. Built with care.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Cursor glow effect
+        const cursorGlow = document.getElementById('cursorGlow');
+        if (cursorGlow) {
+            document.addEventListener('mousemove', (e) => {
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+            });
+        }
+        
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        const navText = document.querySelectorAll('.nav-text');
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('bg-white/90', 'nav-blur', 'shadow-sm', 'py-4');
+                navbar.classList.remove('py-6');
+                navText.forEach(el => {
+                    el.classList.remove('text-white');
+                    el.classList.add('text-warm-900');
+                });
+                navLinks.forEach(el => {
+                    el.classList.remove('text-white/80');
+                    el.classList.add('text-warm-600');
+                });
+            } else {
+                navbar.classList.remove('bg-white/90', 'nav-blur', 'shadow-sm', 'py-4');
+                navbar.classList.add('py-6');
+                navText.forEach(el => {
+                    el.classList.add('text-white');
+                    el.classList.remove('text-warm-900');
+                });
+                navLinks.forEach(el => {
+                    el.classList.add('text-white/80');
+                    el.classList.remove('text-warm-600');
+                });
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Intersection Observer for text reveals
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.text-reveal').forEach(el => observer.observe(el));
+        
+        // Counter animation
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.dataset.target);
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            entry.target.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            entry.target.textContent = Math.floor(current) + '+';
+                        }
+                    }, 30);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        });
+        
+        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+        
+        // Portfolio filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+        
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active button
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-warm-900', 'text-white', 'border-warm-900');
+                    b.classList.add('text-warm-600', 'border-warm-300');
+                });
+                btn.classList.add('bg-warm-900', 'text-white', 'border-warm-900');
+                btn.classList.remove('text-warm-600', 'border-warm-300');
+                
+                const filter = btn.dataset.filter;
+                
+                portfolioItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 50);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.9)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+        
+        // Testimonial slider
+        let currentSlide = 0;
+        const testimonialSlider = document.getElementById('testimonialSlider');
+        const totalSlides = 3;
+        
+        function updateSlider() {
+            testimonialSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+        
+        document.getElementById('nextTestimonial').addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        });
+        
+        document.getElementById('prevTestimonial').addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        });
+        
+        // Auto-advance testimonials
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }, 6000);
+        
+        // Accordion
+        document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const content = trigger.nextElementSibling;
+                const icon = trigger.querySelector('.rotate-icon');
+                
+                // Close all others
+                document.querySelectorAll('.accordion-content').forEach(c => {
+                    if (c !== content) c.classList.remove('active');
+                });
+                document.querySelectorAll('.rotate-icon').forEach(i => {
+                    if (i !== icon) i.classList.remove('active');
+                });
+                
+                content.classList.toggle('active');
+                icon.classList.toggle('active');
+            });
+        });
+        
+        // Contact form
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<span class="flex items-center gap-2">Message Sent <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>';
+            btn.classList.add('bg-sage-600');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('bg-sage-600');
+                e.target.reset();
+            }, 3000);
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Parallax effect for hero image
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroImage = document.querySelector('.hero-gradient + div img');
+            if (heroImage && scrolled < window.innerHeight) {
+                heroImage.style.transform = `scale(1.1) translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
