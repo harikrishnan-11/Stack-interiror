@@ -11,12 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const passwordInput = loginForm.querySelector('input[type="password"]');
     const roleSelect = loginForm.querySelector("select");
 
-    /* =========================================
-       SHOW ERROR
-    ========================================= */
-
+    // ─────────────────────────────
+    // SHOW ERROR
+    // ─────────────────────────────
     function showError(input, message) {
-
         const formGroup = input.parentElement;
 
         const oldError = formGroup.querySelector(".error-message");
@@ -31,12 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
         formGroup.appendChild(error);
     }
 
-    /* =========================================
-       REMOVE ERROR
-    ========================================= */
-
+    // ─────────────────────────────
+    // REMOVE ERROR
+    // ─────────────────────────────
     function removeError(input) {
-
         const formGroup = input.parentElement;
 
         formGroup.classList.remove("error");
@@ -45,75 +41,88 @@ document.addEventListener("DOMContentLoaded", () => {
         if (error) error.remove();
     }
 
-    /* =========================================
-       EMAIL VALIDATION
-    ========================================= */
-
+    // ─────────────────────────────
+    // EMAIL VALIDATION
+    // ─────────────────────────────
     function validateEmail(email) {
         const regex = /^[^\s@]+@[^\s@]+\.(com|in)$/;
         return regex.test(email);
     }
 
-    /* =========================================
-       SUBMIT HANDLER
-    ========================================= */
-
+    // ─────────────────────────────
+    // SUBMIT HANDLER
+    // ─────────────────────────────
     loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
         let isValid = true;
 
-        /* EMAIL */
-        if (emailInput.value.trim() === "") {
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+        const role = roleSelect.value;
+
+        // EMAIL
+        if (email === "") {
             showError(emailInput, "Email is required");
             isValid = false;
-        } else if (!validateEmail(emailInput.value.trim())) {
+        } else if (!validateEmail(email)) {
             showError(emailInput, "Enter valid .com or .in email");
             isValid = false;
         } else {
             removeError(emailInput);
         }
 
-        /* PASSWORD */
-        if (passwordInput.value.trim() === "") {
+        // PASSWORD
+        if (password === "") {
             showError(passwordInput, "Password is required");
             isValid = false;
-        } else if (passwordInput.value.trim().length < 6) {
+        } else if (password.length < 6) {
             showError(passwordInput, "Password must be 6+ characters");
             isValid = false;
         } else {
             removeError(passwordInput);
         }
 
-        /* ROLE */
-        if (roleSelect.value === "") {
+        // ROLE
+        if (role === "") {
             showError(roleSelect, "Please select role");
             isValid = false;
         } else {
             removeError(roleSelect);
         }
 
-        /* SUCCESS */
+        // ─────────────────────────────
+        // SUCCESS LOGIN
+        // ─────────────────────────────
         if (isValid) {
 
             console.log("Login successful");
 
-            const role = roleSelect.value;
+            // ✅ SAVE USER SESSION DATA
+            localStorage.setItem("loggedInEmail", email);
+            localStorage.setItem("loggedInRole", role);
 
+            const userData = {
+                email,
+                role
+            };
+
+            localStorage.setItem("userData", JSON.stringify(userData));
+
+            // redirect
             setTimeout(() => {
                 if (role === "admin") {
                     window.location.href = "./admin.html";
                 } else {
                     window.location.href = "./user.html";
                 }
-            }, 800);
+            }, 600);
         }
     });
 
-    /* =========================================
-       REMOVE ERROR WHILE TYPING
-    ========================================= */
-
+    // ─────────────────────────────
+    // LIVE ERROR CLEAR
+    // ─────────────────────────────
     emailInput.addEventListener("input", () => removeError(emailInput));
     passwordInput.addEventListener("input", () => removeError(passwordInput));
     roleSelect.addEventListener("change", () => removeError(roleSelect));

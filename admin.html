@@ -9,16 +9,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+        
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="./admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 
 <body>
 
-    <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
-        <i class="fa-solid fa-bars"></i>
-    </button>
+    
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <aside class="sidebar" id="sidebar">
@@ -26,6 +27,10 @@
             <h2>STACKLY</h2>
             <p>Interior Design</p>
         </div>
+        <button class="close-sidebar" id="closeSidebar">
+        ✕
+    </button>
+
         <nav class="sidebar-nav">
             <a class="nav-link active" data-page="dashboard">
                 <i class="fa-solid fa-house"></i> Dashboard
@@ -54,9 +59,6 @@
             <a class="nav-link" data-page="inventory">
                 <i class="fa-solid fa-boxes-stacked"></i> Inventory
             </a>
-            <a class="nav-link" data-page="settings">
-                <i class="fa-solid fa-gear"></i> Settings
-            </a>
         </nav>
     </aside>
 
@@ -68,63 +70,75 @@
                 <h1 id="pageTitle">Admin Dashboard</h1>
             </div>
             <div class="topbar-right">
-                <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Theme">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-                <div class="user-profile glass">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400" alt="Admin">
-                    <div class="user-details">
-                        <h4>Admin</h4>
-                        <p>Manager</p>
-                    </div>
-                </div>
-                <button class="logout-btn">Logout</button>
+                
+                <a href="./login.html">
+                    <button class="logout-btn">Logout</button>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+        <i class="fa-solid fa-bars"></i>
+    </button>
             </div>
         </header>
 
         <div class="page active" id="page-dashboard">
             <section class="hero glass">
-                <div class="hero-content">
-                    <span class="tag">Luxury Interior Platform</span>
-                    <h1>Cinematic Interior Dashboard Experience</h1>
-                    <p>Manage luxury architecture projects, premium clients, revenue analytics, smart interiors, and
-                        design workflows in one elegant workspace.</p>
-                    <div class="hero-buttons">
-                        <button class="primary-btn" onclick="navigate('projects')">Explore Projects</button>
-                        <button class="secondary-btn" onclick="navigate('analytics')">View Analytics</button>
-                    </div>
+    <div class="hero-content">
+
+        <span class="tag">ADMIN</span>
+        <h1>Welcome Back!</h1>
+
+        <!-- USER INFO BLOCK (BEST PLACE FOR EMAIL) -->
+        <div class="user-info">
+            <div class="user-profile">
+                <div class="user-details">
+                    <p class="email email-badge">-</p>
                 </div>
-                <div class="hero-image">
-                    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1400"
-                        alt="Interior Asset">
-                </div>
-            </section>
+            </div>
+
+        </div>
+
+        <div class="hero-buttons">
+            <button class="primary-btn" onclick="navigate('projects')">
+                Explore Projects
+            </button>
+            <button class="secondary-btn" onclick="navigate('analytics')">
+                View Analytics
+            </button>
+        </div>
+
+    </div>
+
+    <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1400"
+            alt="Interior Asset">
+    </div>
+</section>
 
             <div class="stats-grid">
                 <div class="stat-card glass">
                     <div class="stat-top"><span>Total Projects</span>
-                        <div class="icon">🏠</div>
+                        <i class="fa-solid fa-house"></i>
                     </div>
                     <h2 class="counter" data-target="128">0</h2>
                     <p class="success">+12% this month</p>
                 </div>
                 <div class="stat-card glass">
                     <div class="stat-top"><span>Active Clients</span>
-                        <div class="icon">👥</div>
+                        
                     </div>
                     <h2 class="counter" data-target="84">0</h2>
                     <p class="success">+8% growth</p>
                 </div>
                 <div class="stat-card glass">
                     <div class="stat-top"><span>Revenue</span>
-                        <div class="icon">💰</div>
+                        
                     </div>
                     <h2>$2.4M</h2>
                     <p class="success">Luxury contracts rising</p>
                 </div>
                 <div class="stat-card glass">
                     <div class="stat-top"><span>Pending Quotations</span>
-                        <div class="icon">📄</div>
+                        
                     </div>
                     <h2 class="counter" data-target="24">0</h2>
                     <p class="warning">Awaiting approval</p>
@@ -322,21 +336,21 @@
             <div class="stats-grid">
                 <div class="stat-card glass">
                     <div class="stat-top"><span>Total Clients</span>
-                        <div class="icon">👥</div>
+                        
                     </div>
                     <h2>84</h2>
                     <p class="success">+8% this month</p>
                 </div>
                 <div class="stat-card glass">
                     <div class="stat-top"><span>New Leads</span>
-                        <div class="icon">🎯</div>
+                        
                     </div>
                     <h2>12</h2>
                     <p class="warning">Awaiting follow-up</p>
                 </div>
                 <div class="stat-card glass">
                     <div class="stat-top"><span>Retention</span>
-                        <div class="icon">⭐</div>
+                        
                     </div>
                     <h2>94%</h2>
                     <p class="success">Excellent</p>
@@ -424,13 +438,7 @@
                     <p>Project Manager</p>
                     <div class="online"></div><button class="primary-btn small">Contact</button>
                 </div>
-                <div class="team-card glass">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400" alt="">
-                    <h4>Arjun Mehta</h4>
-                    <p>3D Visualizer</p>
-                    <div class="online" style="background:var(--warning)"></div><button
-                        class="primary-btn small">Contact</button>
-                </div>
+                
             </div>
             <section class="glass table-section">
                 <div class="section-title">
@@ -507,17 +515,17 @@
                 <div class="payment-card glass">
                     <h3>Total Revenue</h3>
                     <h1>$2,450,000</h1>
-                    <p class="success">🎯 98% of yearly quota achieved</p>
+                    <p class="success"> 98% of yearly quota achieved</p>
                 </div>
                 <div class="payment-card glass">
                     <h3>Invoiced</h3>
                     <h1>$180,000</h1>
-                    <p class="warning">⏳ $45,000 outstanding balance</p>
+                    <p class="warning"> $45,000 outstanding balance</p>
                 </div>
                 <div class="payment-card glass">
                     <h3>Expenses</h3>
                     <h1>$920,000</h1>
-                    <p class="danger">📉 Material costs up by 4%</p>
+                    <p class="danger"> Material costs up by 4%</p>
                 </div>
             </div>
             <section class="glass table-section">
@@ -643,43 +651,7 @@
             </div>
         </div>
 
-        <div class="page" id="page-settings" style="padding-bottom: 60px;">
-            <div class="page-header">
-                <h1>Settings</h1>
-                <p>Platform profiles and app appearance properties</p>
-            </div>
-            <div class="glass" style="padding:28px; border-radius:16px; margin-bottom:28px">
-                <div class="section-title">
-                    <h2>Profile</h2>
-                </div>
-                <div style="display:flex; align-items:center; gap:20px; margin-bottom:24px; flex-wrap: wrap;">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400"
-                        style="width:72px; height:72px; border-radius:50%; object-fit:cover; border:2px solid var(--accent)"
-                        alt="">
-                    <div>
-                        <h3 style="font-size:17px; font-weight:700">Hari Krishnan</h3>
-                        <p style="font-size:13px; color:var(--muted)">Administrator</p>
-                    </div>
-                    <button class="secondary-btn small" style="margin-left:auto">Change Photo</button>
-                </div>
-                <div class="settings-form-grid">
-                    <div class="form-group"><label>Full Name</label><input type="text" value="Hari Krishnan"></div>
-                    <div class="form-group"><label>Email</label><input type="email" value="harikrishnan@gmail.com">
-                    </div>
-                    <div class="form-group"><label>Phone</label><input type="tel" value="+91 98765 43210"></div>
-                    <div class="form-group">
-                        <label>Designation</label>
-                        <select>
-                            <option>Principal Architect</option>
-                            <option selected>Administrator</option>
-                            <option>Lead Visualizer</option>
-                        </select>
-                    </div>
-                </div>
-                <button class="primary-btn" style="margin-top:24px">Save Changes</button>
-            </div>
-        </div>
-
+        
     </main>
 
     <script src="./admin.js"></script>

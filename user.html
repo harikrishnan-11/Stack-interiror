@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stackly Client Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+        
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="logo">
+            <h2>STACKLY</h2>
+            <p>Interior Design</p>
+        </div>
+        <button class="close-sidebar" id="closeSidebar">✕</button>
+
+        <nav class="sidebar-nav">
+            <a class="nav-link active" data-page="dashboard">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+            <a class="nav-link" data-page="projects">
+                <i class="fa-solid fa-ruler-combined"></i> My Projects
+            </a>
+            <a class="nav-link" data-page="clients">
+                <i class="fa-solid fa-users"></i> Design Team
+            </a>
+            <a class="nav-link" data-page="team">
+                <i class="fa-solid fa-user-tie"></i> Consultations
+            </a>
+            <a class="nav-link" data-page="payments">
+                <i class="fa-solid fa-credit-card"></i> Invoices
+            </a>
+            <a class="nav-link" data-page="analytics">
+                <i class="fa-solid fa-chart-line"></i> Budget Insights
+            </a>
+            <a class="nav-link" data-page="messages">
+                <i class="fa-solid fa-message"></i> Messages
+            </a>
+            <a class="nav-link" data-page="calendar">
+                <i class="fa-solid fa-calendar-days"></i> Timeline
+            </a>
+            <a class="nav-link" data-page="inventory">
+                <i class="fa-solid fa-boxes-stacked"></i> Material Board
+            </a>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div class="dashboard-heading">
+                <span class="dashboard-tag">Stackly Interior Design</span>
+                <h1 id="pageTitle">Client Workspace</h1>
+            </div>
+            <div class="topbar-right">
+                <a href="./login.html">
+                    <button class="logout-btn">Logout</button>
+                </a>
+                <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="page active" id="page-dashboard">
+            <section class="hero glass">
+                <div class="hero-content">
+                    <span class="tag">CLIENT</span>
+                    <h1>Welcome Back!</h1>
+
+                    <div class="user-info">
+                        <div class="user-profile">
+                            <div class="user-details">
+                                <p class="email email-badge">-</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hero-buttons">
+                        <button class="primary-btn" onclick="navigate('projects')">
+                            Track My Projects
+                        </button>
+                        <button class="secondary-btn" onclick="navigate('messages')">
+                            Chat With Designer
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1400"
+                        alt="Interior Asset">
+                </div>
+            </section>
+
+            <div class="stats-grid">
+                <div class="stat-card glass">
+                    <div class="stat-top"><span>Active Spaces</span>
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <h2 class="counter" data-target="2">0</h2>
+                    <p class="success">Living Room & Kitchen</p>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-top"><span>Overall Progress</span></div>
+                    <h2 class="counter" data-target="65">0</h2>
+                    <p class="success">% tasks completed</p>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-top"><span>Total Invested</span></div>
+                    <h2>$45,500</h2>
+                    <p class="success">Premium tier tracking</p>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-top"><span>Pending Approvals</span></div>
+                    <h2 class="counter" data-target="3">0</h2>
+                    <p class="warning">Awaiting your feedback</p>
+                </div>
+            </div>
+
+            <section class="quick-actions glass">
+                <div class="section-title">
+                    <h2>Quick Actions</h2>
+                </div>
+                <div class="actions-grid">
+                    <button class="action-btn"><i class="fa-solid fa-plus"></i> Request Modification</button>
+                    <button class="action-btn"><i class="fa-solid fa-file-arrow-up"></i> Upload References</button>
+                    <button class="action-btn"><i class="fa-solid fa-calendar-check"></i> Book Site Visit</button>
+                    <button class="action-btn"><i class="fa-solid fa-file-invoice"></i> Pay Balance</button>
+                </div>
+            </section>
+
+            <section class="charts-grid">
+                <div class="chart-card glass">
+                    <div class="section-title">
+                        <h3>Project Budget Spent</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card glass">
+                    <div class="section-title">
+                        <h3>Timeline Progress</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="projectChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="notifications-section glass">
+                <div class="section-title">
+                    <h2>Updates & Notifications</h2>
+                </div>
+                <ul class="notification-list">
+                    <li><i class="fa-solid fa-bell"></i> 3D layout rendering for Living Room is ready</li>
+                    <li><i class="fa-solid fa-wallet"></i> Payment milestone invoice #INV-8834 generated</li>
+                    <li><i class="fa-solid fa-pen-ruler"></i> Material selection sample panel awaiting review</li>
+                    <li><i class="fa-solid fa-calendar"></i> Site installation scheduled for next Thursday</li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="page" id="page-projects">
+            <div class="page-header">
+                <h1>My Projects</h1>
+                <p>Track live execution progress, architectural milestones, and material status</p>
+            </div>
+
+            <section class="quick-actions glass" style="margin-bottom: 28px;">
+                <div class="actions-grid">
+                    <button class="action-btn"><i class="fa-solid fa-eye"></i> View Blueprint</button>
+                    <button class="action-btn"><i class="fa-solid fa-download"></i> Download Contract</button>
+                    <button class="action-btn"><i class="fa-solid fa-file-export"></i> Export Report</button>
+                </div>
+            </section>
+
+            <section style="margin-bottom:28px">
+                <div class="section-title">
+                    <h2>Project Lifecycle Tracking</h2>
+                </div>
+                <div class="pipeline-grid">
+                    <div class="pipeline-column glass">
+                        <h3><i class="fa-solid fa-list-check"></i> Design Phase</h3>
+                        <div class="pipeline-card">3D Visualizations — 100%
+                            <div class="progress" style="margin-top:8px">
+                                <div style="width:100%"></div>
+                            </div>
+                        </div>
+                        <div class="pipeline-card">Material Selection — 90%
+                            <div class="progress" style="margin-top:8px">
+                                <div style="width:90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pipeline-column glass">
+                        <h3><i class="fa-solid fa-spinner"></i> Execution Phase</h3>
+                        <div class="pipeline-card">Living Room Framing — 70%
+                            <div class="progress" style="margin-top:8px">
+                                <div style="width:70%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pipeline-column glass">
+                        <h3><i class="fa-solid fa-circle-check"></i> Handover Phase</h3>
+                        <div class="pipeline-card">Concept Consultation — 100%
+                            <div class="progress" style="margin-top:8px">
+                                <div style="width:100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glass table-section">
+                <div class="section-title">
+                    <h3>Active Spaces Log</h3>
+                    <button class="secondary-btn small">Export Summary</button>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Assigned Designer</th>
+                                <th>Space Area</th>
+                                <th>Allocated Budget</th>
+                                <th>Status</th>
+                                <th>Progress Tracker</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Olivia Grace</td>
+                                <td>Luxury Living Room</td>
+                                <td>$25,000</td>
+                                <td><span class="badge success-badge">In Progress</span></td>
+                                <td>
+                                    <div class="progress">
+                                        <div style="width:78%"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>James Oliver</td>
+                                <td>Modular Kitchen</td>
+                                <td>$20,500</td>
+                                <td><span class="badge warning-badge">Procurement</span></td>
+                                <td>
+                                    <div class="progress">
+                                        <div style="width:52%"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section style="margin-top:28px">
+                <div class="section-title">
+                    <h2>Trending Styles in Your Board</h2>
+                </div>
+                <div class="trends-grid">
+                    <div class="trend-card glass">
+                        <h3>Minimal Luxury</h3>
+                        <p>Clean, modern high-end architectural aesthetics chosen for your living room</p>
+                    </div>
+                    <div class="trend-card glass">
+                        <h3>Smart Homes</h3>
+                        <p>AI-powered custom automation routing planned for lighting profiles</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="page" id="page-clients">
+            <div class="page-header">
+                <h1>Your Assigned Design Team</h1>
+                <p>Get in touch with the creative experts handling your design layout execution</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card glass">
+                    <div class="stat-top"><span>Total Experts Assigned</span></div>
+                    <h2>3</h2>
+                    <p class="success">Fully dedicated to your project</p>
+                </div>
+                <div class="stat-card glass">
+                    <div class="stat-top"><span>Next Consultation</span></div>
+                    <h2>May 28</h2>
+                    <p class="warning">Site design assessment</p>
+                </div>
+            </div>
+
+            <section style="margin-bottom:28px">
+                <div class="section-title">
+                    <h2>Active Design Briefings</h2>
+                </div>
+                <div class="inquiry-grid">
+                    <div class="inquiry-card glass">
+                        <div class="inquiry-top">
+                            <h3>Luxury Living Room Concept</h3><span class="badge success-badge">Approved</span>
+                        </div>
+                        <p>Premium marble selections, cinematic custom hidden accent lighting layout options.</p>
+                        <div class="inquiry-footer"><span>Lead: Olivia Grace</span><button class="primary-btn small">View Layout</button></div>
+                    </div>
+                    <div class="inquiry-card glass">
+                        <div class="inquiry-top">
+                            <h3>Kitchen Custom Cabinetry</h3><span class="badge warning-badge">Awaiting Feedback</span>
+                        </div>
+                        <p>Modular pull-out systems, quartz surface choices, integrated pantry profile architecture.</p>
+                        <div class="inquiry-footer"><span>Lead: James Oliver</span><button class="primary-btn small">Give Review</button></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="page" id="page-team">
+            <div class="page-header">
+                <h1>Team Profiles</h1>
+                <p>Connect instantly with your project workflow stakeholders</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card glass">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400" alt="Olivia Grace">
+                    <h4>Olivia Grace</h4>
+                    <p>Senior Architect</p>
+                    <div class="online"></div><button class="primary-btn small">Message</button>
+                </div>
+                <div class="team-card glass">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400" alt="James Oliver">
+                    <h4>James Oliver</h4>
+                    <p>Interior Designer</p>
+                    <div class="online"></div><button class="primary-btn small">Message</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-payments">
+            <div class="page-header">
+                <h1>Invoices & Statements</h1>
+                <p>Review payment contract balance adjustments and secure processing tabs</p>
+            </div>
+            <div class="payments-grid">
+                <div class="payment-card glass">
+                    <h3>Total Budget Cost</h3>
+                    <h1>$45,500</h1>
+                    <p class="success">Allocated via master contract agreement</p>
+                </div>
+                <div class="payment-card glass">
+                    <h3>Total Paid to Date</h3>
+                    <h1>$23,500</h1>
+                    <p class="warning">$22,000 milestones remaining</p>
+                </div>
+                <div class="payment-card glass">
+                    <h3>Material Costs Sourced</h3>
+                    <h1>$14,200</h1>
+                    <p class="success">Locked pricing structure</p>
+                </div>
+            </div>
+            <section class="glass table-section">
+                <div class="section-title">
+                    <h3>Transaction & Milestone Invoices</h3>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Invoice ID</th>
+                                <th>Description Milestone</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#INV-8832</td>
+                                <td>Initial Advance Deposit (3D Layouts)</td>
+                                <td>$15,000</td>
+                                <td>Stripe Card</td>
+                                <td><span class="badge success-badge">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>#INV-8833</td>
+                                <td>Material Procurement Milestone</td>
+                                <td>$8,500</td>
+                                <td>Bank Wire</td>
+                                <td><span class="badge success-badge">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>#INV-8834</td>
+                                <td>Carpentry Installation Completion</td>
+                                <td>$22,000</td>
+                                <td>PayPal / Card</td>
+                                <td><span class="badge warning-badge">Awaiting Milestone</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="page" id="page-analytics">
+            <div class="page-header">
+                <h1>Budget Insights</h1>
+                <p>Resource breakdowns and systematic expenditure visualizations</p>
+            </div>
+            <section class="charts-grid">
+                <div class="chart-card glass">
+                    <div class="section-title">
+                        <h3>Investment Timeline Breakdown</h3>
+                    </div>
+                    <div class="chart-container"><canvas id="revenueChart2"></canvas></div>
+                </div>
+                <div class="chart-card glass">
+                    <div class="section-title">
+                        <h3>Material & Resource Allocation</h3>
+                    </div>
+                    <div class="chart-container"><canvas id="resourceChart"></canvas></div>
+                </div>
+            </section>
+        </div>
+
+        <div class="page" id="page-messages">
+            <div class="page-header">
+                <h1>Project Direct Messaging</h1>
+                <p>Communicate seamlessly regarding blueprint adaptations</p>
+            </div>
+            <div class="messages-wrapper glass">
+                <div class="message">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400" alt="Client">
+                    <div style="flex:1">
+                        <h4>You (Project Client)</h4>
+                        <p>Hey team, can we modify the kitchen island layouts to add two extra seating chairs? Let me know budget impact.</p>
+                    </div>
+                </div>
+                <div class="message">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=400" alt="Olivia Grace">
+                    <div style="flex:1">
+                        <h4>Olivia Grace (Senior Architect)</h4>
+                        <p>The office floor blueprint files look clean. Sourcing configuration adjustments right now to confirm the island specs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" id="page-calendar">
+            <div class="page-header">
+                <h1>Project Schedule & Milestones</h1>
+                <p>Track critical delivery goals and designer site assessment visit dates</p>
+            </div>
+            <div class="calendar-wrapper glass">
+                <div class="calendar-header">
+                    <h3 id="calendarMonthYear">May 2026</h3>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+        </div>
+
+        <div class="page" id="page-inventory">
+            <div class="page-header">
+                <h1>Material Tracker Board</h1>
+                <p>Check the real-time fulfillment status of your customized imports</p>
+            </div>
+            <div class="inventory-grid">
+                <div class="inventory-card glass">
+                    <h3>Italian Marble Panels</h3>
+                    <p>Quantity Sourced: 450 sq ft</p><span class="badge success-badge">At Site Base</span>
+                </div>
+                <div class="inventory-card glass">
+                    <h3>Bespoke Living Room Chandelier</h3>
+                    <p>Quantity Sourced: 1 Unit</p><span class="badge danger-badge">In Transit Custom</span>
+                </div>
+                <div class="inventory-card glass">
+                    <h3>Velvet Fabric Rolls (Upholstery)</h3>
+                    <p>Quantity Sourced: 120 meters</p><span class="badge success-badge">Verified Quality</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="./admin.js"></script>
+</body>
+
+</html>

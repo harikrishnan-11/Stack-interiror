@@ -716,17 +716,25 @@
 .faq-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height .5s ease;
+    /* Smooth cubic-bezier for high-end feel matching Stackly */
+    transition: max-height .4s cubic-bezier(.4, 0, .2, 1), opacity .3s ease;
+    opacity: 0;
     padding: 0 24px;
+}
+
+/* When active, smoothly fade the text in alongside the height expansion */
+.faq-item.active .faq-content {
+    opacity: 1;
 }
 
 .faq-content p {
     color: var(--text);
     line-height: 1.8;
     font-size: var(--font-size-small);
+    /* Keep padding inside the paragraph so scrollHeight measures accurately */
+    padding-top: 10px;
     padding-bottom: 24px;
 }
-
 .faq-section {
     padding: 100px 20px;
 }
