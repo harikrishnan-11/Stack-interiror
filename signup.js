@@ -133,3 +133,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+const formGroupSelect = roleSelect.parentElement;
+    
+    // Create Custom Dropdown Container
+    const customSelect = document.createElement("div");
+    customSelect.className = "custom-select";
+
+    // Create Trigger element
+    const trigger = document.createElement("div");
+    trigger.className = "custom-select__trigger";
+    trigger.innerHTML = `<span>Choose Role</span><div class="custom-select__arrow"></div>`;
+    
+    // Create Options Container
+    const optionsContainer = document.createElement("div");
+    optionsContainer.className = "custom-select__options";
+
+    // Populate custom options using native select structure
+    Array.from(roleSelect.options).forEach((option) => {
+        const optDiv = document.createElement("div");
+        optDiv.className = "custom-select__option";
+        optDiv.textContent = option.textContent;
+        optDiv.dataset.value = option.value;
+
+        if (option.value === "") {
+            optDiv.classList.add("placeholder");
+        }
+
+        // Option Click Event Handling
+        optDiv.addEventListener("click", (e) => {
+            e.stopPropagation(); // Prevent event bubbling conflicts
+            
+            if (option.value !== "") {
+                trigger.querySelector("span").textContent = option.textContent;
+                trigger.classList.add("has-value");
+            } else {
+                trigger.querySelector("span").textContent = "Choose Role";
+                trigger.classList.remove("has-value");
+            }
+
+            // Sync structural form value to original select node
+            roleSelect.value = option.value;
+            
+            // Toggle highlight status array
+            optionsContainer.querySelectorAll(".custom-select__option").forEach(el => el.classList.remove("selected"));
+            optDiv.classList.add("selected");
+            
+            // Dynamic State Clean-up
+            customSelect.classList.remove("open");
+            trigger.classList.remove("open");
+            removeError(roleSelect);
+        });
+
+        optionsContainer.appendChild(optDiv);
+    });

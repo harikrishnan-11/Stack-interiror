@@ -12,6 +12,80 @@ document.addEventListener("DOMContentLoaded", () => {
     const roleSelect = loginForm.querySelector("select");
 
     // ─────────────────────────────
+    // CUSTOM SELECT DROPDOWN LOGIC
+    // ─────────────────────────────
+    const formGroupSelect = roleSelect.parentElement;
+    
+    // Create Custom Dropdown Container
+    const customSelect = document.createElement("div");
+    customSelect.className = "custom-select";
+
+    // Create Trigger element
+    const trigger = document.createElement("div");
+    trigger.className = "custom-select__trigger";
+    trigger.innerHTML = `<span>Choose Role</span><div class="custom-select__arrow"></div>`;
+    
+    // Create Options Container
+    const optionsContainer = document.createElement("div");
+    optionsContainer.className = "custom-select__options";
+
+    // Populate custom options using native select structure
+    Array.from(roleSelect.options).forEach((option) => {
+        const optDiv = document.createElement("div");
+        optDiv.className = "custom-select__option";
+        optDiv.textContent = option.textContent;
+        optDiv.dataset.value = option.value;
+
+        if (option.value === "") {
+            optDiv.classList.add("placeholder");
+        }
+
+        // Option Click Event Handling
+        optDiv.addEventListener("click", (e) => {
+            e.stopPropagation(); // Prevent event bubbling conflicts
+            
+            if (option.value !== "") {
+                trigger.querySelector("span").textContent = option.textContent;
+                trigger.classList.add("has-value");
+            } else {
+                trigger.querySelector("span").textContent = "Choose Role";
+                trigger.classList.remove("has-value");
+            }
+
+            // Sync structural form value to original select node
+            roleSelect.value = option.value;
+            
+            // Toggle highlight status array
+            optionsContainer.querySelectorAll(".custom-select__option").forEach(el => el.classList.remove("selected"));
+            optDiv.classList.add("selected");
+            
+            // Dynamic State Clean-up
+            customSelect.classList.remove("open");
+            trigger.classList.remove("open");
+            removeError(roleSelect);
+        });
+
+        optionsContainer.appendChild(optDiv);
+    });
+
+    customSelect.appendChild(trigger);
+    customSelect.appendChild(optionsContainer);
+    formGroupSelect.appendChild(customSelect);
+
+    // Toggle Dropdown Panel open/close status
+    trigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        customSelect.classList.toggle("open");
+        trigger.classList.toggle("open");
+    });
+
+    // Close dropdown universally when clicking outside form elements
+    document.addEventListener("click", () => {
+        customSelect.classList.remove("open");
+        trigger.classList.remove("open");
+    });
+
+    // ─────────────────────────────
     // SHOW ERROR
     // ─────────────────────────────
     function showError(input, message) {
@@ -61,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = passwordInput.value.trim();
         const role = roleSelect.value;
 
-        // EMAIL
+        // EMAIL VALIDATION
         if (email === "") {
             showError(emailInput, "Email is required");
             isValid = false;
@@ -72,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
             removeError(emailInput);
         }
 
-        // PASSWORD
+        // PASSWORD VALIDATION
         if (password === "") {
             showError(passwordInput, "Password is required");
             isValid = false;
@@ -83,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
             removeError(passwordInput);
         }
 
-        // ROLE
+        // ROLE VALIDATION
         if (role === "") {
             showError(roleSelect, "Please select role");
             isValid = false;
@@ -95,21 +169,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // SUCCESS LOGIN
         // ─────────────────────────────
         if (isValid) {
-
             console.log("Login successful");
 
-            // ✅ SAVE USER SESSION DATA
             localStorage.setItem("loggedInEmail", email);
             localStorage.setItem("loggedInRole", role);
 
-            const userData = {
-                email,
-                role
-            };
-
+            const userData = { email, role };
             localStorage.setItem("userData", JSON.stringify(userData));
 
-            // redirect
             setTimeout(() => {
                 if (role === "admin") {
                     window.location.href = "./admin.html";
@@ -125,6 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ─────────────────────────────
     emailInput.addEventListener("input", () => removeError(emailInput));
     passwordInput.addEventListener("input", () => removeError(passwordInput));
+    // Synced handling with Native element changes triggered by UI Custom Select
     roleSelect.addEventListener("change", () => removeError(roleSelect));
 
 });

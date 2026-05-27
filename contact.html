@@ -256,23 +256,61 @@
     </div>
 
     <!-- SERVICE -->
-    <div class="form-group">
-        <select id="service">
+   <div class="form-group">
 
-            <option value="">Select Service</option>
+    <div class="css-dropdown">
 
-            <option>Living Room Interior</option>
+        <details class="dropdown-wrapper">
 
-            <option>Bedroom Design</option>
+            <!-- TRIGGER -->
+            <summary class="dropdown-trigger">
+                <span class="trigger-text">
+                    Select Service
+                </span>
 
-            <option>Office Space</option>
+                <div class="dropdown-arrow"></div>
+            </summary>
 
-            <option>Kitchen Interior</option>
+            <!-- OPTIONS -->
+            <div class="dropdown-options">
 
-        </select>
+                <label class="option-item">
+                    <input type="radio" name="service" value="Living Room Interior">
+                    <span class="option-text">
+                        Living Room Interior
+                    </span>
+                </label>
 
-        <small class="error-message"></small>
+                <label class="option-item">
+                    <input type="radio" name="service" value="Bedroom Design">
+                    <span class="option-text">
+                        Bedroom Design
+                    </span>
+                </label>
+
+                <label class="option-item">
+                    <input type="radio" name="service" value="Office Space">
+                    <span class="option-text">
+                        Office Space
+                    </span>
+                </label>
+
+                <label class="option-item">
+                    <input type="radio" name="service" value="Kitchen Interior">
+                    <span class="option-text">
+                        Kitchen Interior
+                    </span>
+                </label>
+
+            </div>
+
+        </details>
+
     </div>
+
+    <small class="error-message"></small>
+
+</div>
 
     <!-- MESSAGE -->
     <div class="form-group">
@@ -534,5 +572,37 @@
     <script src="./newsletterEmail.js"></script>
     <script src="./nav.js"></script>
     <script src="./about.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+    const radios =
+        document.querySelectorAll(
+            '.option-item input[type="radio"]'
+        );
+
+    const triggerText =
+        document.querySelector(".trigger-text");
+
+    const dropdown =
+        document.querySelector(".dropdown-wrapper");
+
+    radios.forEach(radio => {
+
+        radio.addEventListener("change", () => {
+
+            triggerText.textContent =
+                radio.value;
+
+            triggerText.style.color =
+                "#1C2820";
+
+            dropdown.removeAttribute("open");
+
+        });
+
+    });
+
+});
+    </script>
 </body>
 </html>
