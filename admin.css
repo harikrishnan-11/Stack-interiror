@@ -211,14 +211,12 @@ body.light-theme .nav-link.active {
 
 /* LEFT — dashboard heading */
 .dashboard-heading {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2px;
-    flex: 1 1 auto;
-    min-width: 0;
+    width: 200px;
+    height: 60px;
+    object-fit: cover;
     overflow: hidden;
 }
+
 
 .dashboard-tag {
     font-size: 10px;
@@ -1146,6 +1144,10 @@ body.light-theme .primary-btn { color: #ffffff; }
 
 /* Mobile */
 @media (max-width: 600px) {
+    .dashboard-heading {
+        width: 150px;
+        height: 45px;
+    }
 
     .topbar {
         padding: 0 14px;
@@ -1195,6 +1197,10 @@ body.light-theme .primary-btn { color: #ffffff; }
 
 /* Ultra small (320px – 375px) */
 @media (max-width: 375px) {
+    .dashboard-heading {
+        width: 100px;
+        height: 30px;
+    }
 
     .page {
         padding: 12px;
