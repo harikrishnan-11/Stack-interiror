@@ -152,18 +152,13 @@ nav {
 }
 
 .logo {
+
     width: 180px;
     height: 50px;
     object-fit: cover;
 }
 
-.logo span {
-    border: 3px solid var(--accent);
-    border-right: none;
 
-    padding-left: 3px;
-    margin-right: 2px;
-}
 
 .nav-links {
     display: flex;
@@ -3251,8 +3246,10 @@ footer {
         padding: 5px;
     }
 
-    .logo img {
-        width: 110px;
+    .logo    {
+        width: 140px;
+        height: 40px;
+        object-fit: cover;
     }
 
     .nav-links {
@@ -3701,8 +3698,12 @@ footer {
   }
 
   .logo {
+    padding: 8px;
     width: 130px;
+    height: 50px;
+    object-fit: cover;
   }
+
 
   .nav-links,
   .desktop-btn {
