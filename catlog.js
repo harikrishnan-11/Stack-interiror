@@ -4,30 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector(".prev-btn");
     const nextBtn = document.querySelector(".next-btn");
 
-    if (!track) return;
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const cards = document.querySelectorAll(".category-card");
+
+    let currentIndex = 0;
 
     /* =========================================
-       ORIGINAL CARDS
+       CARD WIDTH + GAP
     ========================================= */
 
-    const cards = [...track.children];
+    const getScrollAmount = () => {
 
-    /* =========================================
-       DUPLICATE CARDS
-    ========================================= */
-
-    cards.forEach(card => {
-        const clone = card.cloneNode(true);
-        track.appendChild(clone);
-    });
-
-    /* =========================================
-       CARD WIDTH
-    ========================================= */
-
-    const getCardWidth = () => {
-
-        const card = track.querySelector(".category-card");
+        const card = cards[0];
 
         const gap =
             parseInt(window.getComputedStyle(track).gap) || 0;
@@ -36,55 +25,76 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     /* =========================================
+       UPDATE BUTTON STATES
+    ========================================= */
+
+    function updateButtons() {
+
+        /* FIRST CARD */
+        if (currentIndex <= 0) {
+
+            prevBtn.style.opacity = "0.5";
+            prevBtn.style.pointerEvents = "none";
+
+        } else {
+
+            prevBtn.style.opacity = "1";
+            prevBtn.style.pointerEvents = "auto";
+        }
+
+        /* LAST CARD */
+        if (currentIndex >= cards.length - 1) {
+
+            nextBtn.style.opacity = "0.5";
+            nextBtn.style.pointerEvents = "none";
+
+        } else {
+
+            nextBtn.style.opacity = "1";
+            nextBtn.style.pointerEvents = "auto";
+        }
+    }
+
+    /* =========================================
        NEXT BUTTON
     ========================================= */
 
     nextBtn.addEventListener("click", () => {
 
-        const moveAmount = getCardWidth();
+        if (currentIndex >= cards.length - 1) return;
+
+        currentIndex++;
 
         track.scrollBy({
-            left: moveAmount,
+            left: getScrollAmount(),
             behavior: "smooth"
         });
 
-        /* LOOP RESET */
-        setTimeout(() => {
-
-            const halfWidth =
-                track.scrollWidth / 2;
-
-            if (track.scrollLeft >= halfWidth) {
-
-                track.scrollLeft = 0;
-
-            }
-
-        }, 400);
-
+        updateButtons();
     });
 
     /* =========================================
-       PREV BUTTON
+       PREVIOUS BUTTON
     ========================================= */
 
     prevBtn.addEventListener("click", () => {
 
-        const moveAmount = getCardWidth();
+        if (currentIndex <= 0) return;
 
-        /* IF FIRST CARD */
-        if (track.scrollLeft <= 0) {
-
-            track.scrollLeft =
-                track.scrollWidth / 2;
-
-        }
+        currentIndex--;
 
         track.scrollBy({
-            left: -moveAmount,
+            left: -getScrollAmount(),
             behavior: "smooth"
         });
 
+        updateButtons();
     });
+
+    /* =========================================
+       INITIAL BUTTON STATE
+    ========================================= */
+
+    updateButtons();
 
 });
