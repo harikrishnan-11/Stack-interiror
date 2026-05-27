@@ -171,3 +171,10 @@ form.addEventListener("submit", function(e){
     }
 
 });
+
+const message = document.getElementById("message");
+const charCount = document.getElementById("charCount");
+
+message.addEventListener("input", () => {
+    charCount.textContent = message.value.length;
+});

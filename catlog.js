@@ -4,50 +4,75 @@ document.addEventListener("DOMContentLoaded", () => {
     const prevBtn = document.querySelector(".prev-btn");
     const nextBtn = document.querySelector(".next-btn");
 
-    // Clone cards for infinite loop
-    const cards = Array.from(track.children);
+    if (!track) return;
+
+    /* =========================================
+       ORIGINAL CARDS
+    ========================================= */
+
+    const cards = [...track.children];
+
+    /* =========================================
+       DUPLICATE CARDS
+    ========================================= */
 
     cards.forEach(card => {
         const clone = card.cloneNode(true);
         track.appendChild(clone);
     });
 
-    // Scroll amount
-    const getScrollAmount = () => {
-        const card = document.querySelector(".category-card");
-        const gap = parseInt(window.getComputedStyle(track).gap) || 0;
+    /* =========================================
+       CARD WIDTH
+    ========================================= */
+
+    const getCardWidth = () => {
+
+        const card = track.querySelector(".category-card");
+
+        const gap =
+            parseInt(window.getComputedStyle(track).gap) || 0;
 
         return card.offsetWidth + gap;
     };
 
-    // NEXT BUTTON
+    /* =========================================
+       NEXT BUTTON
+    ========================================= */
+
     nextBtn.addEventListener("click", () => {
 
+        const moveAmount = getCardWidth();
+
         track.scrollBy({
-            left: getScrollAmount(),
+            left: moveAmount,
             behavior: "smooth"
         });
 
-        // Infinite Loop Reset
+        /* LOOP RESET */
         setTimeout(() => {
 
-            const maxScroll =
+            const halfWidth =
                 track.scrollWidth / 2;
 
-            if (track.scrollLeft >= maxScroll) {
+            if (track.scrollLeft >= halfWidth) {
 
                 track.scrollLeft = 0;
 
             }
 
-        }, 500);
+        }, 400);
 
     });
 
-    // PREVIOUS BUTTON
+    /* =========================================
+       PREV BUTTON
+    ========================================= */
+
     prevBtn.addEventListener("click", () => {
 
-        // If at start jump to middle
+        const moveAmount = getCardWidth();
+
+        /* IF FIRST CARD */
         if (track.scrollLeft <= 0) {
 
             track.scrollLeft =
@@ -56,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         track.scrollBy({
-            left: -getScrollAmount(),
+            left: -moveAmount,
             behavior: "smooth"
         });
 
